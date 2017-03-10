@@ -31,8 +31,26 @@ public class Astar {
 
 
     public Path runAstar(){
-        return null;
+       ArrayList<Tile> closedSet, openSet =new ArrayList<Tile>();
+    
+       openSet.add(this.origin);
+
+
+       this.initAstar();
+       gscore[origin.getPosX()][origin.getPosY()] = 0d;
+       fscore[origin.getPosX()][origin.getPosY()] = heuristic(origin, dest);
+
+       Tile current = origin;
+
+       while(!openSet.isEmpty()){
+
+       }
+
+
+       return null;
     }
+
+
 
 
     private void initAstar(){
