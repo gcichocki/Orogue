@@ -9,37 +9,30 @@ import java.awt.*;
 public class MapGui extends JFrame {
 
     // memory of component pos
-    JPanel[][] panelHolder;
-    private final Map map;
+    JPanel panel;
 
-    public MapGui(Map map) {
-        super("Map.Map ORogue IA");
-        this.map = map;
-
-        this.panelHolder = new JPanel[map.getRows()][map.getCols()];
-
-        initComponents();
+    public void addTile(Tile t) {
+        JPanel tile = new JPanel();
+        tile.setBackground(Color.black);
+        tile.add(t);
+        panel.add(tile);
     }
 
-    private void initComponents() {
-
-        GridLayout gridLayout = new GridLayout(map.getRows(), map.getCols(), 0, 0);
-
-        for (int i = 0; i < map.getRows(); i++) {
-            for (int j = 0; j < map.getCols(); j++) {
+    public MapGui(int rows, int cols) {
+        super("Map.Map ORogue IA");
+        panel = new JPanel(new GridLayout(rows, cols, 0, 0));
+    }
 
 
-                panelHolder[i][j] = new JPanel();
-                panelHolder[i][j].setBackground(Color.black);
-                panelHolder[i][j].setPreferredSize(new Dimension(22, 22));
-                panelHolder[i][j].add(map.getTile(i, j));
-                add(panelHolder[i][j]);
-            }
-        }
 
-        setLayout(gridLayout);
+    public void initComponents() {
+
+        panel.setBackground(Color.black);
+        JScrollPane scrollPane = new JScrollPane(panel);
+        add(scrollPane);
 
         setResizable(false);
+        setPreferredSize(new Dimension(1200,900));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

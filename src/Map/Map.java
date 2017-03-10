@@ -26,13 +26,16 @@ public class Map {
 
         map = new Tile[rows][cols];
 
+        MapGui mapGui = new MapGui(rows, cols);
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 map[i][j] = new Tile(i, j);
+                mapGui.addTile(map[i][j]);
             }
         }
 
-        MapGui mapGui = new MapGui(this);
+        mapGui.initComponents();
     }
 
     public int getRows() {
