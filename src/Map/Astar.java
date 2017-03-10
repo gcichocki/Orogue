@@ -10,33 +10,83 @@ import static java.lang.StrictMath.sqrt;
  */
 public class Astar {
 
+    private Map map;
     private Tile dest;
     private Tile origin;
+
 
     private double[][] fscore;
     private double[][] gscore;
     private Tile[][] cameFrom;
 
-    public Astar(Tile dest, Tile origin, int rows, int cols) {
+    public Astar(Map map, Tile dest, Tile origin) {
+        this.map = map;
         this.dest = dest;
         this.origin = origin;
-        this.fscore = new double[rows][cols]; // 0 par défaut
-        this.gscore = new double[rows][cols];
-        this.cameFrom = new Tile[rows][cols]; // null par défaut
+        this.fscore = new double[map.getRows()][map.getCols()]; // 0 par défaut
+        this.gscore = new double[map.getRows()][map.getCols()];
+        this.cameFrom = new Tile[map.getRows()][map.getCols()]; // null par défaut
     }
 
 
 
     public Path runAstar(){
-        return null;
+       ArrayList<Tile> closedSet, openSet =new ArrayList<Tile>();
+    
+       openSet.add(this.origin);
+
+
+       this.initAstar();
+       gscore[origin.getPosX()][origin.getPosY()] = 0d;
+       fscore[origin.getPosX()][origin.getPosY()] = heuristic(origin, dest);
+
+       Tile current = origin;
+
+       while(!openSet.isEmpty()){
+
+       }
+
+
+       return null;
     }
 
+
+
+
+    private void initAstar(){
+        for(int i = 0; i < this.map.getRows(); i++){
+            for(int j = 0; j < this.map.getCols();j++){
+                this.fscore[i][j] = Double.MAX_VALUE;
+                this.gscore[i][j] = Double.MAX_VALUE;
+            }
+        }
+    }
+
+    /**
+     * Return the list of neighbours of a tile
+     * @param t a tile
+     * @return the list of neighbours
+     */
+    private ArrayList<Tile> getNeighbours(Tile t){
+        ArrayList<Tile> neighbours = new ArrayList<Tile>();
+
+        if(t.getPosX() != 0)
+            neighbours.add(map.getTile(t.getPosX()-1, t.getPosY()));
+        if(t.getPosY() != 0)
+            neighbours.add(map.getTile(t.getPosX(), t.getPosY()-1));
+        if(t.getPosX() != map.getRows() )
+            neighbours.add(map.getTile(t.getPosX()+1, t.getPosY()));
+        if(t.getPosY() != map.getCols())
+            neighbours.add(map.getTile(t.getPosX(), t.getPosY()+1));
+
+        return neighbours;
+    }
 
     /**
      * Reconstruct the final path after an a* algorithm
      * @return Path finalPath
      */
-    Path FinalPath(){
+    private Path FinalPath(){
         Tile aux = dest;
         Path path = new Path();
         while(aux != origin){
@@ -54,7 +104,7 @@ public class Astar {
      * @param dest
      * @return manhattan distance
      */
-    double heuristic(Tile origin, Tile dest){
+    private double heuristic(Tile origin, Tile dest){
         return StrictMath.abs(dest.getPosX() - origin.getPosX()) + StrictMath.abs(dest.getPosY() - origin.getPosY());
     }
 

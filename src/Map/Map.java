@@ -38,6 +38,7 @@ public class Map {
         mapGui.initComponents();
     }
 
+
     public int getRows() {
         return rows;
     }
