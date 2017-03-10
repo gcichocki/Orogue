@@ -35,6 +35,7 @@ public class Map {
         MapGui mapGui = new MapGui(this);
     }
 
+
     public int getRows() {
         return rows;
     }
