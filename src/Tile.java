@@ -53,6 +53,14 @@ public class Tile extends JLabel {
         this.setBackground(color);
     }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
     public String getAscii() {
         return ascii;
     }
