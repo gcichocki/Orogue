@@ -1,3 +1,5 @@
+package Map;
+
 import java.util.ArrayList;
 
 import static java.lang.StrictMath.abs;
@@ -53,7 +55,7 @@ public class Astar {
      * @return manhattan distance
      */
     double heuristic(Tile origin, Tile dest){
-        return abs(dest.getPosX() - origin.getPosX()) + abs(dest.getPosY() - origin.getPosY());
+        return StrictMath.abs(dest.getPosX() - origin.getPosX()) + StrictMath.abs(dest.getPosY() - origin.getPosY());
     }
 
 
