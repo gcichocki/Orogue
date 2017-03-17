@@ -1,6 +1,5 @@
 package Map;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -20,6 +19,7 @@ public class Tile {
     // y position on the map
     private int posY;
 
+    private int value;
     /**
      * Constructor of a tile, with color and pos
      * @param ascii
@@ -27,11 +27,13 @@ public class Tile {
      * @param posX
      * @param posY
      */
-    public Tile(String ascii, Color color, int posX, int posY) {
+
+    public Tile(String ascii, Color color, int posX, int posY, int value) {
         this.ascii = ascii;
         this.color = color;
         this.posX = posX;
         this.posY = posY;
+        this.value = value;
     }
 
     public int getPosY() {
@@ -70,4 +72,21 @@ public class Tile {
     public void setColor(Color color) {
         this.color = color;
     }
+
+
+    /**
+     *
+     * @return true if the tile is a wall (6) or water (0)
+     */
+
+    public boolean isObstacle(){
+        return value == 0 || value == 6;
+    }
+
+
+    public String toString(){
+        return "tile: " + this.ascii + " color: " + this.color + " posX: " + this.posX + " posY: " + this.posY;
+    }
 }
+
+

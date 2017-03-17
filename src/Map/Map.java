@@ -14,6 +14,8 @@ public class Map {
 
     private int cols;
 
+    static MapGui mapGui;
+
     /**
      * Create a map form the size given in parameter, with only unknow cases
      * @param cols
@@ -26,12 +28,13 @@ public class Map {
 
         map = new Tile[rows][cols];
 
-        MapGui mapGui = new MapGui(rows, cols);
+        mapGui = new MapGui(rows, cols);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 map[i][j] = new Tile(i, j);
-                mapGui.addTile(map[i][j]);
+                //mapGui.addTile(map[i][j]);
+                mapGui.addTile(".", i, j);
             }
         }
 
@@ -64,6 +67,8 @@ public class Map {
      */
     public static void setTile(int posX, int posY, String ascii, Color color) {
         map[posX][posY].setAscii(ascii);
+
         map[posX][posY].setColor(color);
+        mapGui.setTile(ascii, posX, posY);
     }
 }
