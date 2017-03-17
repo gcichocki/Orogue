@@ -18,7 +18,7 @@ public class Adapter extends Thread {
 
     private void initSocket() {
         try {
-            socket = new Socket(InetAddress.getLocalHost(), port);
+            socket = new Socket(InetAddress.getByName("localhost"), port);
             reader =  new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
