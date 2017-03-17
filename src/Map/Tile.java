@@ -79,4 +79,9 @@ public class Tile extends JLabel {
         this.color = color;
         this.setForeground(color);
     }
+
+
+    public String toString(){
+        return "tile: " + this.ascii + " color: " + this.color + " posX: " + this.posX + " posY: " + this.posY;
+    }
 }
