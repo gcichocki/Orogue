@@ -31,22 +31,42 @@ public class Astar {
 
 
     public Path runAstar(){
-       ArrayList<Tile> closedSet, openSet =new ArrayList<Tile>();
-    
-       openSet.add(this.origin);
+        double tmpGscore = 0d;
 
+       ArrayList<Tile> closedSet = new ArrayList<Tile>();
+       MinHeapLocator openSet = new MinHeapLocator();
 
        this.initAstar();
        gscore[origin.getPosX()][origin.getPosY()] = 0d;
        fscore[origin.getPosX()][origin.getPosY()] = heuristic(origin, dest);
-
+       openSet.Insert(this.origin, fscore[origin.getPosX()][origin.getPosY()]);
        Tile current = origin;
 
        while(!openSet.isEmpty()){
+            current = openSet.getMin();
+
+            if(current == dest) {
+                return FinalPath();
+            }
+
+            openSet.removeMin();
+            closedSet.add(current);
+
+            for(Tile t : getNeighbours(current)){
+                if(!closedSet.contains(t)){
+                    tmpGscore = gscore[current.getPosX()][current.getPosY()] + 1d;
+                    if(!openSet.contains(t)){
+                        fscore[t.getPosX()][t.getPosY()] = tmpGscore + heuristic(t, dest);
+                        openSet.Insert(t, fscore[t.getPosX()][t.getPosY()]);
+                    } else if( tmpGscore < gscore[t.getPosX()][t.getPosY()]){
+                        cameFrom[t.getPosX()][t.getPosY()] = current;
+                        gscore[t.getPosX()][t.getPosY()] = tmpGscore;
+                        fscore[t.getPosX()][t.getPosY()] = gscore[t.getPosX()][t.getPosY()] + heuristic(t, dest);
+                    }
+                }
+            }
 
        }
-
-
        return null;
     }
 

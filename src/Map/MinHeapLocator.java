@@ -21,6 +21,14 @@ public class MinHeapLocator {
         heap = new ArrayList<>();
     }
 
+    public boolean contains(Tile t){
+        return locator.containsKey(t);
+    }
+
+    public boolean isEmpty(){
+        return heap.isEmpty();
+    }
+
     private int parent(int pos) {
          return (int) floor((pos - 1) /2);
     }
@@ -62,7 +70,7 @@ public class MinHeapLocator {
         }
     }
 
-    public void SiftUp(Tile tile, int pos) {
+    private void SiftUp(Tile tile, int pos) {
 
         int current = pos;
 
@@ -74,7 +82,7 @@ public class MinHeapLocator {
         locator.put(tile, current);
     }
 
-    public void SiftDown(int pos) {
+    private void SiftDown(int pos) {
 
         while (!isLeaf(pos)) {
             int j = leftChild(pos);
@@ -91,7 +99,7 @@ public class MinHeapLocator {
         locator.put(heap.get(pos).tile, pos);
     }
 
-    public void Update(Tile tile, double cost) {
+    private void Update(Tile tile, double cost) {
         // we update
         heap.get(locator.get(tile)).cost = cost;
         //we siftUp
