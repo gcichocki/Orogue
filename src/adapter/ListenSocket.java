@@ -10,13 +10,17 @@ public class ListenSocket extends Thread {
 
     public ListenSocket(BufferedReader reader) {
         this.reader = reader;
-        buffer = new ArrayBlockingQueue<String>(2048);
+        buffer = new ArrayBlockingQueue<String>(20048);
+        this.start();
     }
 
     public void run() {
+        int cpt = 0;
         while(true) {
             try {
-                buffer.add(reader.readLine());
+                String tmp = reader.readLine();
+                cpt++;
+                buffer.add(tmp);
             } catch (Exception e) {
                 e.printStackTrace();
             }

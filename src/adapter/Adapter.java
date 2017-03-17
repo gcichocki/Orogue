@@ -1,8 +1,8 @@
 package adapter;
 
 import Map.Map;
-import Map.Tile;
 import Map.Terrain;
+import Map.Character;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -19,6 +19,7 @@ public class Adapter extends Thread {
     private void initSocket() {
         try {
             socket = new Socket(InetAddress.getByName("localhost"), port);
+            System.out.println("Connection Etablie !");
             reader =  new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
@@ -51,6 +52,13 @@ public class Adapter extends Thread {
             int type = Integer.parseInt(buf[1]);
             Map.setTile(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type));
         }
+        if (tab_line[3].equals("ally")) {
+            String[] buf = tab_line[6].split("=");
+            if (buf[1].equals("h")) {
+                Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"));
+            }
+
+        }
     }
 
    /* private void updateAction() {
@@ -60,14 +68,22 @@ public class Adapter extends Thread {
     public Adapter(int port) {
         this.port = port;
         initSocket();
+        System.out.println("Création de la socket de lecture");
         ls = new ListenSocket(reader);
+        System.out.println("Socket de lecture crée");
+        this.start();
+        System.out.println("Thread de récupération de ligne lancé");
     }
 
     public void run() {
         String line;
+        //int cpt = 0;
         while(true) {
             line = ls.getLastLine();
+            System.out.println(line);
             processLine(line);
+            //cpt++;
+            //System.out.println(cpt);
         }
     }
 }
