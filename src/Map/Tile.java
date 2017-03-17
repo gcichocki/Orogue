@@ -20,6 +20,7 @@ public class Tile extends JLabel {
     // y position on the map
     private int posY;
 
+    private int value;
     /**
      * Constructor of a tile, with color and pos
      * @param ascii
@@ -27,7 +28,7 @@ public class Tile extends JLabel {
      * @param posX
      * @param posY
      */
-    public Tile(String ascii, Color color, int posX, int posY) {
+    public Tile(String ascii, Color color, int posX, int posY, int value) {
         super(ascii);
         this.ascii = ascii;
         this.color = color;
@@ -35,6 +36,7 @@ public class Tile extends JLabel {
         this.posY = posY;
         this.setText(ascii);
         this.setBackground(color);
+        this.value = value;
     }
 
     public int getPosY() {
@@ -81,7 +83,19 @@ public class Tile extends JLabel {
     }
 
 
+    /**
+     *
+     * @return true if the tile is a wall (6) or water (0)
+     */
+
+    public boolean isObstacle(){
+        return value == 0 || value == 6;
+    }
+
+
     public String toString(){
         return "tile: " + this.ascii + " color: " + this.color + " posX: " + this.posX + " posY: " + this.posY;
     }
 }
+
+

@@ -89,15 +89,22 @@ public class Astar {
      */
     private ArrayList<Tile> getNeighbours(Tile t){
         ArrayList<Tile> neighbours = new ArrayList<Tile>();
+        
+        Tile n = map.getTile(t.getPosX()-1, t.getPosY());
+        if(t.getPosX() != 0 && !n.isObstacle())
+            neighbours.add(n);
 
-        if(t.getPosX() != 0)
-            neighbours.add(map.getTile(t.getPosX()-1, t.getPosY()));
-        if(t.getPosY() != 0)
-            neighbours.add(map.getTile(t.getPosX(), t.getPosY()-1));
-        if(t.getPosX() != map.getRows() )
-            neighbours.add(map.getTile(t.getPosX()+1, t.getPosY()));
-        if(t.getPosY() != map.getCols())
-            neighbours.add(map.getTile(t.getPosX(), t.getPosY()+1));
+        n = map.getTile(t.getPosX(), t.getPosY()-1);
+        if(t.getPosY() != 0 && !n.isObstacle())
+            neighbours.add(n);
+
+        n = map.getTile(t.getPosX()+1, t.getPosY());
+        if(t.getPosX() != map.getRows() && !n.isObstacle())
+            neighbours.add(n);
+
+        n = map.getTile(t.getPosX(), t.getPosY()+1);
+        if(t.getPosY() != map.getCols() && !n.isObstacle())
+            neighbours.add(n);
 
         return neighbours;
     }
