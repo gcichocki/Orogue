@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Created by FatePc on 3/4/2017.
  */
-public class Tile extends JLabel {
+public class Tile {
 
     // symb ascii
     private String ascii;
@@ -28,13 +28,10 @@ public class Tile extends JLabel {
      * @param posY
      */
     public Tile(String ascii, Color color, int posX, int posY) {
-        super(ascii);
         this.ascii = ascii;
         this.color = color;
         this.posX = posX;
         this.posY = posY;
-        this.setText(ascii);
-        this.setBackground(color);
     }
 
     public int getPosY() {
@@ -52,14 +49,10 @@ public class Tile extends JLabel {
      * @param posY
      */
     public Tile(int posX, int posY) {
-        super(".");
         this.ascii = ".";
         this.color = Color.GRAY;
         this.posX = posX;
         this.posY = posY;
-        this.setText(ascii);
-
-        this.setBackground(color);
     }
 
     public String getAscii() {
@@ -72,11 +65,9 @@ public class Tile extends JLabel {
 
     public void setAscii(String ascii) {
         this.ascii = ascii;
-        this.setText(ascii);
     }
 
     public void setColor(Color color) {
         this.color = color;
-        this.setForeground(color);
     }
 }
