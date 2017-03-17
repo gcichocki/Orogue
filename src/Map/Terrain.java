@@ -32,4 +32,5 @@ public class Terrain {
         terrain_color.put(6, Color.RED);
         terrain_color.put(7, Color.CYAN);
     }
+
 }

@@ -3,7 +3,7 @@ package Map;
 import java.awt.*;
 
 /**
- * Created by FatePc on 3/4/2017.
+ * Created by FatePc on 3/4/ 17.
  */
 public class Map {
 
@@ -65,9 +65,9 @@ public class Map {
      * @param posX
      * @param posY
      */
-    public static void setTile(int posX, int posY, String ascii, Color color) {
+    public static void setTile(int posX, int posY, String ascii, Color color, int value) {
         map[posX][posY].setAscii(ascii);
-
+        map[posX][posY].setValue(value);
         map[posX][posY].setColor(color);
         mapGui.setTile(ascii, posX, posY);
     }

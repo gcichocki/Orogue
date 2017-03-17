@@ -19,7 +19,7 @@ public class Astar {
     private double[][] gscore;
     private Tile[][] cameFrom;
 
-    public Astar(Map map, Tile dest, Tile origin) {
+    public Astar(Map map, Tile origin, Tile dest) {
         this.map = map;
         this.dest = dest;
         this.origin = origin;
@@ -58,6 +58,7 @@ public class Astar {
                     if(!openSet.contains(t)){
                         fscore[t.getPosX()][t.getPosY()] = tmpGscore + heuristic(t, dest);
                         openSet.Insert(t, fscore[t.getPosX()][t.getPosY()]);
+                        cameFrom[t.getPosX()][t.getPosY()] = current;
                     } else if( tmpGscore < gscore[t.getPosX()][t.getPosY()]){
                         cameFrom[t.getPosX()][t.getPosY()] = current;
                         gscore[t.getPosX()][t.getPosY()] = tmpGscore;
@@ -89,22 +90,18 @@ public class Astar {
      */
     private ArrayList<Tile> getNeighbours(Tile t){
         ArrayList<Tile> neighbours = new ArrayList<Tile>();
-        
-        Tile n = map.getTile(t.getPosX()-1, t.getPosY());
-        if(t.getPosX() != 0 && !n.isObstacle())
-            neighbours.add(n);
 
-        n = map.getTile(t.getPosX(), t.getPosY()-1);
-        if(t.getPosY() != 0 && !n.isObstacle())
-            neighbours.add(n);
+        if(t.getPosX() != 0 && !map.getTile(t.getPosX()-1, t.getPosY()).isObstacle())
+            neighbours.add(map.getTile(t.getPosX()-1, t.getPosY()));
 
-        n = map.getTile(t.getPosX()+1, t.getPosY());
-        if(t.getPosX() != map.getRows() && !n.isObstacle())
-            neighbours.add(n);
+        if(t.getPosY() != 0 && !map.getTile(t.getPosX(), t.getPosY()-1).isObstacle())
+            neighbours.add(map.getTile(t.getPosX(), t.getPosY()-1));
 
-        n = map.getTile(t.getPosX(), t.getPosY()+1);
-        if(t.getPosY() != map.getCols() && !n.isObstacle())
-            neighbours.add(n);
+        if(t.getPosX() != map.getRows()-1 && !map.getTile(t.getPosX()+1, t.getPosY()).isObstacle())
+            neighbours.add(map.getTile(t.getPosX()+1, t.getPosY()));
+
+        if(t.getPosY() != map.getCols()-1 && !map.getTile(t.getPosX(), t.getPosY()+1).isObstacle())
+            neighbours.add(map.getTile(t.getPosX(), t.getPosY()+1));
 
         return neighbours;
     }

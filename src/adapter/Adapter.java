@@ -50,12 +50,12 @@ public class Adapter extends Thread {
         if(tab_line[3].equals("terrain")) {
             String[] buf = tab_line[4].split("=");
             int type = Integer.parseInt(buf[1]);
-            Map.setTile(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type));
+            Map.setTile(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
         }
         if (tab_line[3].equals("ally")) {
             String[] buf = tab_line[6].split("=");
             if (buf[1].equals("h")) {
-                Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"));
+                Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
             }
 
         }

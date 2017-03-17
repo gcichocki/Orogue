@@ -10,7 +10,7 @@ public class MapMain {
     public static void main(String[] args) {
         Map map = new Map(26, 50);
 
-        map.setTile(20 , 15, "@", Color.blue);
-        map.setTile(20 -1, 15, "#", Color.RED);
+        map.setTile(20 , 15, "@", Color.blue, -1);
+        map.setTile(20 -1, 15, "#", Color.RED, 6);
     }
 }

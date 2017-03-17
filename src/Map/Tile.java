@@ -73,7 +73,13 @@ public class Tile {
         this.color = color;
     }
 
+    public void setValue(int v){
+        this.value = v;
+    }
 
+    public int getValue() {
+        return value;
+    }
     /**
      *
      * @return true if the tile is a wall (6) or water (0)
