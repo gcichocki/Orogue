@@ -68,8 +68,9 @@ public class MapGui extends JFrame {
         setVisible(true);
     }
 
-    public void setTile(String t, int i, int y) {
-        table.setValueAt(t, i, y);
+    public void setTile(String t, String color, int i, int y) {
+        String html = "<html><font color=\"" + color + "\">" + t + "</font></html>";
+        table.setValueAt(html, i, y);
         ((AbstractTableModel) table.getModel()).fireTableCellUpdated(i, y);
     }
 

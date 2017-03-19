@@ -11,7 +11,7 @@ public class Tile {
     private String ascii;
 
     // color
-    private Color color;
+    private String color;
 
     // x position on the map
     private int posX;
@@ -28,7 +28,7 @@ public class Tile {
      * @param posY
      */
 
-    public Tile(String ascii, Color color, int posX, int posY, int value) {
+    public Tile(String ascii, String color, int posX, int posY, int value) {
         this.ascii = ascii;
         this.color = color;
         this.posX = posX;
@@ -52,7 +52,7 @@ public class Tile {
      */
     public Tile(int posX, int posY) {
         this.ascii = ".";
-        this.color = Color.GRAY;
+        this.color = "grey";
         this.posX = posX;
         this.posY = posY;
     }
@@ -61,7 +61,7 @@ public class Tile {
         return ascii;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
@@ -69,7 +69,7 @@ public class Tile {
         this.ascii = ascii;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

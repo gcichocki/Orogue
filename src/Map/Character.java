@@ -12,11 +12,11 @@ public class Character {
         character_to_sym.put("@", "@");
     }
 
-    public static HashMap<String, Color> character_to_color;
+    public static HashMap<String, String> character_to_color;
     static
     {
         character_to_color = new HashMap<>();
-        character_to_color.put("h", Color.YELLOW);
-        character_to_color.put("@", Color.BLUE);
+        character_to_color.put("h", "yellow");
+        character_to_color.put("@", "blue");
     }
 }
