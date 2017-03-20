@@ -54,6 +54,14 @@ public class Enemy {
     }
 
     public void action() {
-
+        switch(state){
+            case Idle: break;
+            case Explore: break;
+            case Rush: break;
+            case Search: break;
+        }
     }
+
+
+
 }
