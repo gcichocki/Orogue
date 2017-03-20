@@ -18,11 +18,6 @@ public class MapGui extends JFrame {
     DefaultTableModel defaultTableModel;
 
     public void addTile(String t, int i, int y) {
-        /*JPanel tile = new JPanel();
-        tile.setBackground(Color.black);
-        tile.add(t);
-        panel.add(tile);*/
-
         defaultTableModel.setValueAt( t, i, y);
     }
 
@@ -41,6 +36,7 @@ public class MapGui extends JFrame {
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setFocusable(false);
+        table.setCellSelectionEnabled(false);
         table.setShowGrid(false);
         table.setRowMargin(0);
         table.setIntercellSpacing(new Dimension(5, 5));
@@ -58,7 +54,7 @@ public class MapGui extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
 
-        setResizable(false);
+        setResizable(true);
         setPreferredSize(new Dimension(1200,900));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

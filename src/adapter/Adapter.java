@@ -27,12 +27,12 @@ public class Adapter extends Thread {
         }
     }
 
-    private int extractX(String[] tab_line) {
+    private int extractY(String[] tab_line) {
         String[] buf = tab_line[1].split("=");
         return Integer.parseInt(buf[1]);
     }
 
-    private int extractY(String[] tab_line) {
+    private int extractX(String[] tab_line) {
         String[] buf = tab_line[2].split("=");
         return Integer.parseInt(buf[1]);
     }
@@ -56,6 +56,13 @@ public class Adapter extends Thread {
             String[] buf = tab_line[6].split("=");
             if (buf[1].equals("h")) {
                 Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
+            }
+
+        }
+        if (tab_line[3].equals("ennemy")) {
+            String[] buf = tab_line[6].split("=");
+            if (buf[1].equals("@")) {
+                Map.setTile(x, y, Character.character_to_sym.get("@"), Character.character_to_color.get("@"), -1);
             }
 
         }

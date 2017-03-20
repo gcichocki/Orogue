@@ -26,9 +26,9 @@ public class Terrain {
         terrain_color.put(0, "blue");
         terrain_color.put(1, "green");
         terrain_color.put(2, "gray");
-        terrain_color.put(3, "brown");
-        terrain_color.put(4, "dark_gray");
-        terrain_color.put(5, "dark_gray");
+        terrain_color.put(3, "maroon");
+        terrain_color.put(4, "white");
+        terrain_color.put(5, "dark_grey");
         terrain_color.put(6, "red");
         terrain_color.put(7, "cyan");
     }

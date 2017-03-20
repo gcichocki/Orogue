@@ -21,7 +21,7 @@ public class Map {
      * @param cols
      * @param rows
      */
-    public Map(int rows, int cols) {
+    public Map(int cols, int rows) {
 
         this.rows = rows;
         this.cols = cols;
