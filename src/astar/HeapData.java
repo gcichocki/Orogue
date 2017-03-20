@@ -1,4 +1,6 @@
-package Map;
+package astar;
+
+import Map.Tile;
 
 /**
  * Created by tahel on 24/11/16.

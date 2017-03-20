@@ -1,8 +1,8 @@
-package adapter;
+package test;
 
 import Map.*;
-
-import java.awt.*;
+import astar.Astar;
+import astar.Path;
 
 /**
  * Created by alex on 10/03/17.

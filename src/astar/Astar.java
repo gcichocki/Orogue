@@ -1,9 +1,9 @@
-package Map;
+package astar;
+
+import Map.Map;
+import Map.Tile;
 
 import java.util.ArrayList;
-
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.sqrt;
 
 /**
  * Created by toon on 10/03/17.

@@ -1,4 +1,6 @@
-package Map;
+package astar;
+
+import Map.Tile;
 
 import java.util.ArrayList;
 import java.util.HashMap;

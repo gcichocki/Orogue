@@ -1,6 +1,6 @@
 package units;
 
-import Map.Path;
+import astar.Path;
 
 public class Enemy {
     public enum AgentState {
