@@ -1,4 +1,6 @@
-package Map;
+package test;
+
+import Map.Map;
 
 import java.awt.*;
 
