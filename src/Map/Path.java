@@ -14,6 +14,7 @@ public class Path {
     }
 
     public ArrayList<Tile> getPath() {
+
         return path;
     }
 

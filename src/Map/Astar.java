@@ -32,7 +32,7 @@ public class Astar {
 
     public Path runAstar(){
         double tmpGscore = 0d;
-
+        double tmpFscore = 0d;
        ArrayList<Tile> closedSet = new ArrayList<Tile>();
        MinHeapLocator openSet = new MinHeapLocator();
 
@@ -55,14 +55,16 @@ public class Astar {
             for(Tile t : getNeighbours(current)){
                 if(!closedSet.contains(t)){
                     tmpGscore = gscore[current.getPosX()][current.getPosY()] + 1d;
+                    tmpFscore = tmpGscore + heuristic(t, dest);
                     if(!openSet.contains(t)){
-                        fscore[t.getPosX()][t.getPosY()] = tmpGscore + heuristic(t, dest);
+                        fscore[t.getPosX()][t.getPosY()] = tmpFscore;
+                        gscore[t.getPosX()][t.getPosY()] = tmpGscore;
                         openSet.Insert(t, fscore[t.getPosX()][t.getPosY()]);
                         cameFrom[t.getPosX()][t.getPosY()] = current;
-                    } else if( tmpGscore < gscore[t.getPosX()][t.getPosY()]){
+                    } else if( tmpFscore < fscore[t.getPosX()][t.getPosY()]){
                         cameFrom[t.getPosX()][t.getPosY()] = current;
                         gscore[t.getPosX()][t.getPosY()] = tmpGscore;
-                        fscore[t.getPosX()][t.getPosY()] = gscore[t.getPosX()][t.getPosY()] + heuristic(t, dest);
+                        fscore[t.getPosX()][t.getPosY()] = tmpFscore;
                     }
                 }
             }
@@ -78,7 +80,6 @@ public class Astar {
         for(int i = 0; i < this.map.getRows(); i++){
             for(int j = 0; j < this.map.getCols();j++){
                 this.fscore[i][j] = Double.MAX_VALUE;
-                this.gscore[i][j] = Double.MAX_VALUE;
             }
         }
     }

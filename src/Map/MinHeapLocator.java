@@ -86,7 +86,7 @@ public class MinHeapLocator {
 
         while (!isLeaf(pos)) {
             int j = leftChild(pos);
-            if (j < heap.size()-1 && heap.get(j).cost > heap.get(j+1).cost)
+            if (j < heap.size()-1 && heap.get(j).cost >= heap.get(j+1).cost)
                 j++; // right child is smaller
 
             if (heap.get(pos).cost <= heap.get(j).cost) return; // we're done
