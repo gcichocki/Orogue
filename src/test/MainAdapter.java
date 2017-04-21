@@ -42,7 +42,7 @@ public class MainAdapter {
 
             //map.setTile(20 , 15, "@", Color.blue, -1);
 
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < 400; i++) {
                 int x = (int) (Math.random() * 29d);
                 int y = (int) (Math.random() * 29d);
                 if (!((x == xori && y == yori) || (x == xf && y == yf)))
