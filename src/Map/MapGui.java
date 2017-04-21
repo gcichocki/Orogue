@@ -3,6 +3,8 @@ package Map;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Created by FatePc on 3/4/2017.
@@ -25,9 +27,27 @@ public class MapGui extends JFrame {
         super("Map.Map ORogue IA");
         this.rows = rows;
         this.cols = cols;
-
         defaultTableModel = new DefaultTableModel(rows, cols);
+        addKeyListener(new MyKeyListener());
     }
+
+    public class MyKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            //System.out.println("keyTyped=" +KeyEvent.getKeyText(e.getKeyCode()));
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode()));
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            //System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+        }
+    }
+
 
 
 

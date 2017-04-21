@@ -18,6 +18,8 @@ public class Adapter extends Thread {
     private ListenSocket ls;
     private Master master;
 
+    //parameters width=xx height=yy
+
     private void initSocket() {
         try {
             socket = new Socket(InetAddress.getByName("localhost"), port);
@@ -43,8 +45,15 @@ public class Adapter extends Thread {
         String[] tab_line = line.split(" ");
         int x = extractX(tab_line);
         int y = extractY(tab_line);
-        if(tab_line[0].equals("print")) {
-            updateMap(tab_line, x, y);
+        switch (tab_line[0]) {
+            case "parameters":
+                // x-> height, y -> width
+                System.out.println("taille de la map : " + x + " * " + y);
+                master.setMap(new Map(y, x));
+                break;
+            case "print":
+                updateMap(tab_line, x, y);
+                break;
         }
     }
 

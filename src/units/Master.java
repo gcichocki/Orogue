@@ -13,10 +13,13 @@ public class Master {
     private Map map;
     private MasterState state;
 
-    public Master(Map map) {
-        this.map = map;
+    public Master() {
         this.listUnits = new ArrayList<>();
         this.state = MasterState.Idle;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public void addUnit(Enemy e) {
