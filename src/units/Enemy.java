@@ -10,18 +10,21 @@ public class Enemy {
         Search
     }
 
+    private int id;
     private int hp;
     private int posX;
     private int posY;
     private Path path;
     private AgentState state;
+    private char symbole;
 
-    public Enemy(int hp, int posX, int posY, Path path) {
+    public Enemy(int id, int hp, int posX, int posY, char symbole) {
+        this.id = id;
         this.hp = hp;
         this.posX = posX;
         this.posY = posY;
-        this.path = path;
         this.state = AgentState.Idle;
+        this.symbole = symbole;
     }
 
     public int getHp() {
@@ -49,8 +52,20 @@ public class Enemy {
         posY = y;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public void updatePlan() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public char getSymbole() {
+        return symbole;
     }
 
     public void action() {
@@ -60,6 +75,7 @@ public class Enemy {
             case Rush: break;
             case Search: break;
         }
+
     }
 
 

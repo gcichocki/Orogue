@@ -53,6 +53,12 @@ public class Adapter extends Thread {
                 break;
             case "print":
                 updateMap(tab_line, x, y);
+                if(tab_line[3].equals("ally") ) {
+                    int id = Integer.parseInt(tab_line[4].split("=")[1]);
+                    int hp = Integer.parseInt(tab_line[5].split("=")[1]);
+                    char symbole = tab_line[6].split("=")[1].charAt(0);
+                    master.updateEntity(id, hp, x, y,symbole);
+                }
                 break;
             case "action?":
                 // we change the controller status to allow the user input (action)
