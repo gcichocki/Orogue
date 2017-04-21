@@ -27,7 +27,7 @@ public class Master {
 
     }
 
-    public updateMap() {
+    public void updateMap() {
 
     }
 }

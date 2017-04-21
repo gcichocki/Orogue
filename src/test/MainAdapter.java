@@ -15,7 +15,7 @@ public class MainAdapter {
 
         //Adapter a = new Adapter(1029);
 
-        //testAstar();
+        testAstar();
 
     }
 
