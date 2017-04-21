@@ -27,7 +27,7 @@ public class Master {
 
     }
 
-    public updateMap() {
-
+    public void updateMap(int x, int y, String character, String color, int type) {
+        Map.setTile(x, y, character, color, type);
     }
 }
