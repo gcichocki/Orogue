@@ -71,4 +71,8 @@ public class Map {
         map[posX][posY].setColor(color);
         mapGui.setTile(ascii, color, posX, posY);
     }
+
+    public MapGui getMapGui() {
+        return mapGui;
+    }
 }

@@ -53,6 +53,19 @@ public class Adapter extends Thread {
                 break;
             case "print":
                 updateMap(tab_line, x, y);
+                if(tab_line[3].equals("ally") ) {
+                    int id = Integer.parseInt(tab_line[4].split("=")[1]);
+                    int hp = Integer.parseInt(tab_line[5].split("=")[1]);
+                    char symbole = tab_line[6].split("=")[1].charAt(0);
+                    master.updateEntity(id, hp, x, y,symbole);
+                }
+                break;
+            case "action?":
+                // we change the controller status to allow the user input (action)
+                Controller.getInstance().setStatus(Controller.Status.ACTION);
+                master.getMap().getMapGui().setFocus(x, y);
+                // we need to see for which unit we need to move and stuff
+                //TODO
                 break;
         }
     }
@@ -61,24 +74,58 @@ public class Adapter extends Thread {
         if(tab_line[3].equals("terrain")) {
             String[] buf = tab_line[4].split("=");
             int type = Integer.parseInt(buf[1]);
-            //Map.setTile(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
             master.updateMap(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
         }
         if (tab_line[3].equals("ally")) {
             String[] buf = tab_line[6].split("=");
-            if (buf[1].equals("h")) {
-                //Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
-                master.updateMap(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
-            }
-
+            master.updateMap(x, y, Character.character_to_sym.get(buf[1]), Character.character_to_color.get(buf[1]), -1);
         }
         if (tab_line[3].equals("ennemy")) {
             String[] buf = tab_line[6].split("=");
-            if (buf[1].equals("@")) {
-                //Map.setTile(x, y, Character.character_to_sym.get("@"), Character.character_to_color.get("@"), -1);
-                master.updateMap(x, y, Character.character_to_sym.get("@"), Character.character_to_color.get("@"), -1);
-            }
+            master.updateMap(x, y, Character.character_to_sym.get(buf[1]), Character.character_to_color.get(buf[1]), -1);
+        }
+    }
 
+    public void sendAction(String key) {
+        System.out.println("Key entered : " + key);
+        String msg = "";
+        switch (key) {
+            case "Z":
+                msg = "north\n";
+                break;
+            case "D":
+                msg = "east\n";
+                break;
+            case "Q":
+                msg = "west\n";
+                break;
+            case "S":
+                msg = "south\n";
+                break;
+            case "U":
+                msg = "attack 0 -1\n";
+                break;
+            case "K":
+                msg = "attack 1 0\n";
+                break;
+            case "M":
+                msg = "attack 0 1\n";
+                break;
+            case "H":
+                msg = "attack -1 0\n";
+                break;
+        }
+        try {
+            if (!msg.equals("") && Controller.getInstance().getStatus() == Controller.Status.ACTION) {
+                writer.write(msg + "\n");
+                writer.flush();
+                Controller.getInstance().setStatus(Controller.Status.WAIT);
+                System.out.println(msg);
+            } else {
+                System.out.println("Error of input or not the right time to move...");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
