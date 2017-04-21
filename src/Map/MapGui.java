@@ -1,5 +1,7 @@
 package Map;
 
+import adapter.Controller;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -39,7 +41,7 @@ public class MapGui extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode()));
+            Controller.getInstance().getAdapter().sendAction(KeyEvent.getKeyText(e.getKeyCode()));
         }
 
         @Override
