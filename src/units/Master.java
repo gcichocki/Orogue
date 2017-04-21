@@ -22,6 +22,10 @@ public class Master {
         this.map = map;
     }
 
+    public Map getMap() {
+        return map;
+    }
+
     /*public void addUnit(Enemy e) {
     }*/
 
@@ -39,12 +43,14 @@ public class Master {
             Enemy unit = listUnits.get(unitId);
             unit.setPos(posX, posY);
             unit.setHp(hp);
+            map.getMapGui().updateUnit(unit);
         }
         else {
             Enemy unit = new Enemy(unitId, hp, posX, posY, symbole);
             listUnits.put(unitId, unit);
+            map.getMapGui().addUnit(unit);
         }
-        printListUnit();
+        //printListUnit();
     }
 
     public void printListUnit() {

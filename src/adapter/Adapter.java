@@ -63,6 +63,7 @@ public class Adapter extends Thread {
             case "action?":
                 // we change the controller status to allow the user input (action)
                 Controller.getInstance().setStatus(Controller.Status.ACTION);
+                master.getMap().getMapGui().setFocus(x, y);
                 // we need to see for which unit we need to move and stuff
                 //TODO
                 break;

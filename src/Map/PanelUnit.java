@@ -1,5 +1,7 @@
 package Map;
 
+import units.Enemy;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,16 +16,16 @@ public class PanelUnit extends JPanel{
     JLabel posX;
     JLabel posY;
 
-    int hp;
+    int maxHp;
 
-    public PanelUnit(String name, int hp, int posX, int posY) {
-        this.name = new JLabel(name);
-        this.hp = hp;
+    public PanelUnit(Enemy e) {
+        this.name = new JLabel("Mon unit n°"  +e.getId());
         this.lifeBar = new JProgressBar(SwingConstants.HORIZONTAL);
-        this.lifeBar.setValue(hp);
+        this.maxHp = e.getHp();
+        this.lifeBar.setValue(100*e.getHp()/this.maxHp);
         lifeBar.setStringPainted(true);
-        this.posX = new JLabel("x :" + posX);
-        this.posY = new JLabel("y :" + posY);
+        this.posX = new JLabel("x :" + e.getPosX());
+        this.posY = new JLabel("y :" + e.getPosY());
         initComponents();
     }
 
@@ -36,5 +38,12 @@ public class PanelUnit extends JPanel{
         this.add(posX);
         this.add(posY);
         this.add(lifeBar);
+    }
+
+    public void update(Enemy e) {
+        this.lifeBar.setValue(100*e.getHp()/this.maxHp);
+        this.posX.setText("x : " + e.getPosX());
+        this.posY.setText("y : " + e.getPosY());
+        this.revalidate();
     }
 }

@@ -1,6 +1,7 @@
 package Map;
 
 import adapter.Controller;
+import units.Enemy;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -8,6 +9,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 /**
  * Created by FatePc on 3/4/2017.
@@ -20,6 +22,8 @@ public class MapGui extends JFrame {
 
     JTable table;
     BorderLayout root_layout;
+    JPanel hud_panel;
+    HashMap<Integer, PanelUnit> idtoPanelUnit;
 
     DefaultTableModel defaultTableModel;
 
@@ -31,8 +35,18 @@ public class MapGui extends JFrame {
         super("Map.Map ORogue IA");
         this.rows = rows;
         this.cols = cols;
-        defaultTableModel = new DefaultTableModel(rows, cols);
-        addKeyListener(new MyKeyListener());
+        defaultTableModel = new DefaultTableModel(rows, cols) {
+            public boolean isCellEditable(int row, int column)
+            {
+                return false;//This causes all cells to be not editable
+            }
+        };
+
+        idtoPanelUnit = new HashMap<Integer, PanelUnit>();
+    }
+
+    public void setFocus(int x, int y) {
+        
     }
 
     public class MyKeyListener implements KeyListener {
@@ -43,6 +57,7 @@ public class MapGui extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
+            System.out.println("key : "  + KeyEvent.getKeyText(e.getKeyCode()));
             Controller.getInstance().getAdapter().sendAction(KeyEvent.getKeyText(e.getKeyCode()));
         }
 
@@ -54,14 +69,8 @@ public class MapGui extends JFrame {
 
     public void initComponents() {
         setTitle("OROGUE -- IA");
-        root_layout = new BorderLayout();
-        setLayout(root_layout);
 
         //vue de la map
-        JPanel map_panel = new JPanel();
-        //map_panel.setPreferredSize(new Dimension(600, 600));
-        map_panel.setBackground(Color.black);
-
         table = new JTable(defaultTableModel);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setFocusable(false);
@@ -83,14 +92,13 @@ public class MapGui extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBackground(Color.black);
         scrollPane.getViewport().setBackground(Color.black);
-        map_panel.add(scrollPane);
-        add(map_panel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.NORTH);
 
         //info contrôles
-        JEditorPane zone_info = new JEditorPane();
+        JTextPane zone_info = new JTextPane();
         zone_info.setContentType("text/html");
-        zone_info.setBackground(Color.GRAY);
         zone_info.setPreferredSize(new Dimension(350, 100));
+        zone_info.addKeyListener(new MyKeyListener());
 
         String content_info = "<html>" +
                 "<font>Touche de déplacement : <br></font>" +
@@ -98,18 +106,14 @@ public class MapGui extends JFrame {
                 "</html>";
 
         zone_info.setText(content_info);
-
         add(zone_info, BorderLayout.EAST);
 
         //info joueurs
-        JPanel hud_panel = new JPanel(new GridLayout(10, 1));
+        hud_panel = new JPanel(new GridLayout(10, 1));
         UIManager.put("ProgressBar.background", Color.ORANGE);
         UIManager.put("ProgressBar.foreground", Color.BLUE);
         UIManager.put("ProgressBar.selectionBackground", Color.RED);
         UIManager.put("ProgressBar.selectionForeground", Color.GREEN);
-
-        PanelUnit panelUnit = new PanelUnit("MonUnit", 100, 10, 7);
-        hud_panel.add(panelUnit);
 
         JScrollPane unitList = new JScrollPane(hud_panel);
 
@@ -128,6 +132,17 @@ public class MapGui extends JFrame {
         String html = "<html><font color=\"" + color + "\">" + t + "</font></html>";
         table.setValueAt(html, i, y);
         ((AbstractTableModel) table.getModel()).fireTableCellUpdated(i, y);
+    }
+
+    public void addUnit(Enemy e) {
+        PanelUnit panelUnit = new PanelUnit(e);
+        idtoPanelUnit.put(e.getId(), panelUnit);
+        hud_panel.add(panelUnit);
+        hud_panel.revalidate();
+    }
+
+    public void updateUnit(Enemy e) {
+        idtoPanelUnit.get(e.getId()).update(e);
     }
 
 }
