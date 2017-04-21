@@ -3,6 +3,7 @@ package adapter;
 import Map.Map;
 import Map.Terrain;
 import Map.Character;
+import units.Master;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -15,6 +16,7 @@ public class Adapter extends Thread {
     private BufferedWriter writer;
     private BufferedReader reader;
     private ListenSocket ls;
+    private Master master;
 
     private void initSocket() {
         try {
@@ -50,19 +52,22 @@ public class Adapter extends Thread {
         if(tab_line[3].equals("terrain")) {
             String[] buf = tab_line[4].split("=");
             int type = Integer.parseInt(buf[1]);
-            Map.setTile(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
+            //Map.setTile(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
+            master.updateMap(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
         }
         if (tab_line[3].equals("ally")) {
             String[] buf = tab_line[6].split("=");
             if (buf[1].equals("h")) {
-                Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
+                //Map.setTile(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
+                master.updateMap(x, y, Character.character_to_sym.get("h"), Character.character_to_color.get("h"), -1);
             }
 
         }
         if (tab_line[3].equals("ennemy")) {
             String[] buf = tab_line[6].split("=");
             if (buf[1].equals("@")) {
-                Map.setTile(x, y, Character.character_to_sym.get("@"), Character.character_to_color.get("@"), -1);
+                //Map.setTile(x, y, Character.character_to_sym.get("@"), Character.character_to_color.get("@"), -1);
+                master.updateMap(x, y, Character.character_to_sym.get("@"), Character.character_to_color.get("@"), -1);
             }
 
         }
@@ -72,8 +77,9 @@ public class Adapter extends Thread {
 
     }*/
 
-    public Adapter(int port) {
+    public Adapter(int port, Master master) {
         this.port = port;
+        this.master = master;
         initSocket();
         System.out.println("Création de la socket de lecture");
         ls = new ListenSocket(reader);
