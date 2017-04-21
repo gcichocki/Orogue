@@ -3,6 +3,7 @@ package Map;
 import adapter.Controller;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,7 +20,6 @@ public class MapGui extends JFrame {
 
     JTable table;
     BorderLayout root_layout;
-    JProgressBar life_bar;
 
     DefaultTableModel defaultTableModel;
 
@@ -52,9 +52,6 @@ public class MapGui extends JFrame {
         }
     }
 
-
-
-
     public void initComponents() {
         setTitle("OROGUE -- IA");
         root_layout = new BorderLayout();
@@ -62,20 +59,20 @@ public class MapGui extends JFrame {
 
         //vue de la map
         JPanel map_panel = new JPanel();
-        map_panel.setPreferredSize(new Dimension(600, 600));
+        //map_panel.setPreferredSize(new Dimension(600, 600));
         map_panel.setBackground(Color.black);
+
         table = new JTable(defaultTableModel);
-        table.setBackground(Color.black);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setFocusable(false);
         table.setCellSelectionEnabled(false);
         table.setShowGrid(false);
         table.setRowMargin(0);
         table.setIntercellSpacing(new Dimension(5, 5));
-        table.setBackground(Color.black);
         table.setTableHeader(null);
-        table.setPreferredScrollableViewportSize(new Dimension(700, 400));
+        table.setPreferredScrollableViewportSize(new Dimension(1180, 600));
         table.setRowHeight(20);
+        table.setBackground(Color.black);
 
         TableColumnModel columnModel = table.getColumnModel();
 
@@ -85,48 +82,45 @@ public class MapGui extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBackground(Color.black);
+        scrollPane.getViewport().setBackground(Color.black);
         map_panel.add(scrollPane);
         add(map_panel, BorderLayout.NORTH);
 
         //info contrôles
-        JPanel control_panel = new JPanel(new BorderLayout());
-        control_panel.setPreferredSize(new Dimension(300, 200));
+        JEditorPane zone_info = new JEditorPane();
+        zone_info.setContentType("text/html");
+        zone_info.setBackground(Color.GRAY);
+        zone_info.setPreferredSize(new Dimension(350, 100));
 
-        JLabel up_text = new JLabel("Flèche haut / Z");
-        JLabel down_text = new JLabel("Flèche bas / S");
-        JLabel left_text = new JLabel("Flèche gauche / Q");
-        JLabel right_text = new JLabel("Flèche droite / D");
+        String content_info = "<html>" +
+                "<font>Touche de déplacement : <br></font>" +
+                "<font color=blue>Z (haut)<br> Q(gauche)<br> S(bas)<br> D(droite)<br></font>" +
+                "</html>";
 
-        control_panel.add(up_text, BorderLayout.NORTH);
-        control_panel.add(down_text, BorderLayout.SOUTH);
-        control_panel.add(left_text, BorderLayout.WEST);
-        control_panel.add(right_text, BorderLayout.EAST);
+        zone_info.setText(content_info);
 
-        add(control_panel, BorderLayout.EAST);
+        add(zone_info, BorderLayout.EAST);
 
         //info joueurs
-        JPanel hud_panel = new JPanel(new BorderLayout());
-        hud_panel.setPreferredSize(new Dimension(500, 500));
-        life_bar = new JProgressBar(JProgressBar.HORIZONTAL);
-        life_bar.setValue(80);
-        JLabel life_label = new JLabel("Vie : ");
-        JPanel padding = new JPanel();
-        padding.setPreferredSize(new Dimension(200,200));
+        JPanel hud_panel = new JPanel(new GridLayout(10, 1));
+        UIManager.put("ProgressBar.background", Color.ORANGE);
+        UIManager.put("ProgressBar.foreground", Color.BLUE);
+        UIManager.put("ProgressBar.selectionBackground", Color.RED);
+        UIManager.put("ProgressBar.selectionForeground", Color.GREEN);
 
-        hud_panel.add(life_label, BorderLayout.NORTH);
-        hud_panel.add(life_bar, BorderLayout.WEST);
-        hud_panel.add(padding, BorderLayout.SOUTH);
+        PanelUnit panelUnit = new PanelUnit("MonUnit", 100, 10, 7);
+        hud_panel.add(panelUnit);
 
-        add(hud_panel, BorderLayout.WEST);
+        JScrollPane unitList = new JScrollPane(hud_panel);
 
+        add(unitList, BorderLayout.WEST);
 
+        // fenetre globale
         setResizable(true);
         setPreferredSize(new Dimension(1200,900));
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         pack();
-
+        setResizable(false);
         setVisible(true);
     }
 
