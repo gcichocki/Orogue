@@ -1,6 +1,6 @@
 package astar;
 
-import Map.Tile;
+import map.Tile;
 
 import java.util.ArrayList;
 

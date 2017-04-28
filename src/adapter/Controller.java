@@ -1,5 +1,6 @@
 package adapter;
 
+import map.MapGui;
 import units.Master;
 
 /**
@@ -11,12 +12,18 @@ public class Controller {
 
     private Adapter adapter;
 
+    private MapGui mapGui;
+
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public MapGui getMapGUI() {
+        return mapGui;
     }
 
     public enum Status {
@@ -41,5 +48,12 @@ public class Controller {
 
     public Adapter getAdapter() {
         return adapter;
+    }
+
+    public void initGUI(int x, int y) {
+        // we create the GUI
+        this.mapGui = new MapGui(x, y);
+        // we add the GUI as an listener of the map
+        master.getMap().addListerner(this.mapGui);
     }
 }

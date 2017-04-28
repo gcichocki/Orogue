@@ -1,11 +1,9 @@
-package Map;
+package map;
 
 import units.Enemy;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by FatePc on 3/23/2017.

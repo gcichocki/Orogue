@@ -1,8 +1,8 @@
 package adapter;
 
-import Map.Map;
-import Map.Terrain;
-import Map.Character;
+import map.Map;
+import map.Terrain;
+import map.Character;
 import units.Master;
 
 import java.io.*;
@@ -50,6 +50,7 @@ public class Adapter extends Thread {
                 // x-> height, y -> width
                 System.out.println("taille de la map : " + x + " * " + y);
                 master.setMap(new Map(y, x));
+                Controller.getInstance().initGUI(y, x);
                 break;
             case "print":
                 updateMap(tab_line, x, y);
@@ -63,27 +64,49 @@ public class Adapter extends Thread {
             case "action?":
                 // we change the controller status to allow the user input (action)
                 Controller.getInstance().setStatus(Controller.Status.ACTION);
-                master.getMap().getMapGui().setFocus(x, y);
+                Controller.getInstance().getMapGUI().setFocus(x, y);
                 // we need to see for which unit we need to move and stuff
                 //TODO
+                break;
+            case "hide":
+                master.hide(x, y);
                 break;
         }
     }
 
     private void updateMap(String[] tab_line, int x, int y) {
-        if(tab_line[3].equals("terrain")) {
+        // the type : "terrain", "ally", "enemy"
+        String type_terrain =  tab_line[3];
+
+        if (tab_line[3].equals("ally") || tab_line[3].equals("ennemy")) {
+            String[] buf = tab_line[6].split("=");
+            String unit = buf[1];
+
+            // we update the map
+            master.updateMap(x, y, type_terrain, unit);
+        } else {
+            // the type , number of the type : mountain, water, ...
             String[] buf = tab_line[4].split("=");
             int type = Integer.parseInt(buf[1]);
-            master.updateMap(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type);
+
+            // we update the map
+            master.updateMap(x, y, type_terrain, type);
+        }
+
+
+        /*
+        if(tab_line[3].equals("terrain")) {
+
+            master.updateMap(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type, false);
         }
         if (tab_line[3].equals("ally")) {
-            String[] buf = tab_line[6].split("=");
+
             master.updateMap(x, y, Character.character_to_sym.get(buf[1]), Character.character_to_color.get(buf[1]), -1);
         }
         if (tab_line[3].equals("ennemy")) {
             String[] buf = tab_line[6].split("=");
             master.updateMap(x, y, Character.character_to_sym.get(buf[1]), Character.character_to_color.get(buf[1]), -1);
-        }
+        }*/
     }
 
     public void sendAction(String key) {
@@ -102,25 +125,34 @@ public class Adapter extends Thread {
             case "S":
                 msg = "south\n";
                 break;
+            case "NumPad-8":
             case "U":
+                // ATTACK UP
                 msg = "attack 0 -1\n";
                 break;
+            case "NumPad-6":
             case "K":
+                //ATTACK RIGHT
                 msg = "attack 1 0\n";
                 break;
+            case "NumPad-2":
             case "M":
+                // ATTACK DOWN
                 msg = "attack 0 1\n";
                 break;
+            case "NumPad-4":
             case "H":
+                // ATTACK  LEFT
                 msg = "attack -1 0\n";
                 break;
         }
         try {
             if (!msg.equals("") && Controller.getInstance().getStatus() == Controller.Status.ACTION) {
-                writer.write(msg + "\n");
+                writer.write(msg);
                 writer.flush();
                 Controller.getInstance().setStatus(Controller.Status.WAIT);
                 System.out.println(msg);
+                Controller.getInstance().getMapGUI().setFocus(-1, -1);
             } else {
                 System.out.println("Error of input or not the right time to move...");
             }

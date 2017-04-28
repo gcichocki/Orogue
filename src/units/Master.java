@@ -1,10 +1,15 @@
 package units;
 
-import Map.Map;
+import adapter.Controller;
+import map.Map;
 
 import java.util.HashMap;
 
 public class Master {
+    public void hide(int x, int y) {
+        map.hide(x, y);
+    }
+
     public enum MasterState {
         Idle,
         On
@@ -26,15 +31,16 @@ public class Master {
         return map;
     }
 
-    /*public void addUnit(Enemy e) {
-    }*/
-
     public void notifyUnit() {
 
     }
 
-    public void updateMap(int x, int y, String character, String color, int type) {
-        Map.setTile(x, y, character, color, type);
+    public void updateMap(int x, int y, String type_terrain, int type) {
+        map.updateTile(x, y, type_terrain, type);
+    }
+
+    public void updateMap(int x, int y, String type_unit, String unit) {
+        map.updateTile(x, y, type_unit, unit);
     }
 
     public void updateEntity(int unitId, int hp, int posX, int posY, char symbole) {
@@ -43,12 +49,12 @@ public class Master {
             Enemy unit = listUnits.get(unitId);
             unit.setPos(posX, posY);
             unit.setHp(hp);
-            map.getMapGui().updateUnit(unit);
+            Controller.getInstance().getMapGUI().updateUnit(unit);
         }
         else {
             Enemy unit = new Enemy(unitId, hp, posX, posY, symbole);
             listUnits.put(unitId, unit);
-            map.getMapGui().addUnit(unit);
+            Controller.getInstance().getMapGUI().addUnit(unit);
         }
         //printListUnit();
     }

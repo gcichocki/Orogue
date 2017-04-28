@@ -1,6 +1,6 @@
 package test;
 
-import Map.*;
+import map.*;
 import astar.Astar;
 import astar.Path;
 
@@ -11,7 +11,7 @@ public class MainAdapter {
 
     public static void main(String[] args) throws InterruptedException {
         Map map = new Map(30, 30);
-        System.out.println("Map génerer ");
+        System.out.println("map génerer ");
 
         //Adapter a = new Adapter(1029);
 
@@ -36,7 +36,7 @@ public class MainAdapter {
 
             for (int i = 0; i < 30; i++) {
                 for (int j = 0; j < 30; j++) {
-                    map.setTile(i, j, ".", "red", -1);
+                    map.updateTile(i, j, "terrain", 2);
                 }
             }
 
@@ -46,7 +46,7 @@ public class MainAdapter {
                 int x = (int) (Math.random() * 29d);
                 int y = (int) (Math.random() * 29d);
                 if (!((x == xori && y == yori) || (x == xf && y == yf)))
-                    map.setTile(x, y, "#", "red", 6);
+                    map.updateTile(x, y, "terrain", 6);
 
             }
 
@@ -60,12 +60,15 @@ public class MainAdapter {
             if (chemin != null) {
 
                 for (Tile t : chemin.getPath()) {
-                    map.setTile(t.getPosX(), t.getPosY(), "%", "blue", -1);
+                    map.updateTile(t.getPosX(), t.getPosY(), "terrain", 8);
+                    //map.setTile(t.getPosX(), t.getPosY(), "%", "blue", -1);
                 }
 
             }
-            map.setTile(xori, yori, "D", "green", -1);
-            map.setTile(xf, yf, "A", "yellow", -1);
+            map.updateTile(xori, yori, "terrain", 3);
+            //map.setTile(xori, yori, "D", "green", -1);
+            map.updateTile(xf, yf, "terrain", 3);
+            //map.setTile(xf, yf, "A", "yellow", -1);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

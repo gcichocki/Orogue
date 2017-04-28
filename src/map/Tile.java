@@ -1,6 +1,4 @@
-package Map;
-
-import java.awt.*;
+package map;
 
 /**
  * Created by FatePc on 3/4/2017.
@@ -18,6 +16,12 @@ public class Tile {
 
     // y position on the map
     private int posY;
+
+    public boolean isHide() {
+        return hide;
+    }
+
+    private boolean hide = false;
 
     private int value;
     /**
@@ -90,8 +94,12 @@ public class Tile {
     }
 
 
-    public String toString(){
+    public String toString() {
         return "tile: " + this.ascii + " color: " + this.color + " posX: " + this.posX + " posY: " + this.posY;
+    }
+
+    public void setHide(boolean hide) {
+        this.hide = hide;
     }
 }
 

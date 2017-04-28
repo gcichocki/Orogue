@@ -1,7 +1,4 @@
-import Map.Map;
-import adapter.Adapter;
 import adapter.Controller;
-import units.Master;
 
 public class Main {
     public static void main(String[] args) {
