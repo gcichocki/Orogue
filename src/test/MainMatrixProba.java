@@ -1,7 +1,9 @@
 package test;
 
+import proba.BinaryHeap;
 import proba.MatrixProba;
 import proba.MaxHeap;
+import proba.Proba;
 
 @SuppressWarnings("unchecked")
 
@@ -16,20 +18,24 @@ public class MainMatrixProba {
 
         matx.printMatrix();
 
-        matx.setProba(1,1, (byte) 3);
+        matx.setProba(1,1, (byte) 9);
         matx.setProba(0,4, (byte) 1);
         matx.setProba(3,3, (byte) 9);
         matx.setProba(4,2, (byte) 7);
-        matx.setProba(1,3, (byte) 2);
+        matx.setProba(1,3, (byte) 9);
         matx.setProba(4,4, (byte) 8);
 
         matx.printMatrix();
 
+        //matx.updateMapProba((byte)3);
+        matx.printMatrix();
+
+
         matx.smoothMapProba();
 
-        /*
-
-        MaxHeap maxH = new MaxHeap();
+        //matx.printMatrix();
+/*
+        BinaryHeap<Proba> maxH = new BinaryHeap<Proba>();
         maxH.add(matx.getProba(1,1));
         maxH.add(matx.getProba(0,4));
         maxH.add(matx.getProba(3,3));
@@ -45,8 +51,8 @@ public class MainMatrixProba {
         maxH.remove();
 
         System.out.println(maxH.toString());
+*/
 
-        */
 
     }
 }

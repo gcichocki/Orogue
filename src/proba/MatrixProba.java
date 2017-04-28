@@ -64,7 +64,14 @@ public class MatrixProba {
      * @param value probas à décrémentées
      * Décrémente toutes les probas égales à celle en paramètre de
      */
-    public void updateMapProba(byte value){}
+    public void updateMapProba(byte value){
+        for(int i=0;i<sizeX;i++){
+            for (int j=0; j<sizeY;j++){
+                if(this.mapProba[i][j].getValue()==value)
+                    this.mapProba[i][j].setValue((byte) (value - 1));
+            }
+        }
+    }
 
 
     public boolean isFull(int filled){
@@ -90,15 +97,14 @@ public class MatrixProba {
 
        Proba newMapProba[][] = new Proba[sizeX][sizeY];
 
-       byte maxValue = 0;
        Proba maxProba;
+       ArrayList<Proba> neighbours = new ArrayList<>();
 
-       MaxHeap maxHeap = new MaxHeap();
+        BinaryHeap<Proba> maxHeap = new BinaryHeap<Proba>(false);
         for(int i = 0; i < sizeX; i++){
             for(int j = 0; j < sizeY; j++){
-
+                newMapProba[i][j]= new Proba(i, j, (byte) 0);
                 maxHeap.add(this.mapProba[i][j]);
-                //newMapProba[i][j].setValue((byte) 0);
             }
         }
         //System.out.println(maxHeap.toString());
@@ -106,37 +112,54 @@ public class MatrixProba {
        // nb de case rempli dans notre nouvelle matrice
        int filled = 0;
 
-        /*
-       while(!isFull(filled)){
 
-           maxProba = (Proba) maxHeap.remove();
-           maxValue = maxProba.getValue();
-           System.out.println(maxProba);
+       while( !maxHeap.isEmpty()){ //!isFull(filled) &&
+           System.out.println(maxHeap.length() + "---" + maxHeap.toString());
+           maxProba = maxHeap.remove();
 
+           if(newMapProba[maxProba.getX()][maxProba.getY()].getValue() < maxProba.getValue()){
+               newMapProba[maxProba.getX()][maxProba.getY()].setValue(maxProba.getValue());
+               filled++;
 
-           ArrayList<Proba> listNeighbours = this.getNeighbours(maxProba);
-
-           for (Proba next : listNeighbours) {
-
-
-               if (newMapProba[next.getX()][next.getY()].getValue() < next.getValue()
-                       || next.getValue() < maxValue){
-
-                   newMapProba[next.getX()][next.getY()].setValue(next.getValue());
-                   filled++;
+               neighbours = this.getNeighbours(maxProba);
+               byte new_value = (byte)(maxProba.getValue()-1);
+               for (Proba p: neighbours) {
+                   if(new_value >  mapProba[p.getX()][p.getY()].getValue() && new_value > newMapProba[p.getX()][p.getY()].getValue()) {
+                       newMapProba[p.getX()][p.getY()].setValue(new_value);
+                       p.setValue(new_value);
+                       maxHeap.add(newMapProba[p.getX()][p.getY()]);
+                   }
                }
            }
 
-           listNeighbours.clear();
 
        }
 
        this.printMatrix();
        this.mapProba = newMapProba;
        this.printMatrix();
-       */
+
+    }
+    /*maxProba = (Proba) maxHeap.remove();
+    maxValue = maxProba.getValue();
+           System.out.println(maxProba);
+
+
+    ArrayList<Proba> listNeighbours = this.getNeighbours(maxProba);
+
+           for (Proba next : listNeighbours) {
+
+
+        if (newMapProba[next.getX()][next.getY()].getValue() < next.getValue()
+                || next.getValue() < maxValue){
+
+            newMapProba[next.getX()][next.getY()].setValue(next.getValue());
+            filled++;
+        }
     }
 
+           listNeighbours.clear();
+           */
 
     public void printMatrix(){
 

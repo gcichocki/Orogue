@@ -34,7 +34,7 @@ public class Proba implements Comparable<Proba> {
 
     @Override
     public int compareTo(Proba o) {
-        return  o.getValue() - this.value;
+        return  this.value - o.getValue();
     }
 
     public String toString(){
