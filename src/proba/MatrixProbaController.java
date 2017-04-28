@@ -22,7 +22,10 @@ public class MatrixProbaController {
          * Yummy
          */
 
-
+        this.matrix.resetMapProba();
+        this.matrix.setProba(x, y, (byte)9);
+        this.matrix.smoothMapProba();
+        this.matrix.printMatrix();
     }
 
     public void updateProba(){
@@ -31,8 +34,11 @@ public class MatrixProbaController {
          */
     }
 
+    public void blendProba(int x, int y, byte value, int timelapse){
+        Proba p = new Proba(x, y, (byte)(value-timelapse));
+    }
 
-    public void blendProba(ArrayList<Proba> listProba){
+    public void oldblendProba(ArrayList<Proba> listProba){
         /**
          * Add those probas to the unit mapProba
          * Smooth the result

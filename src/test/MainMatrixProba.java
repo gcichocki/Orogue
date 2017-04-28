@@ -1,9 +1,8 @@
 package test;
 
-import proba.BinaryHeap;
 import proba.DicoProba;
 import proba.MatrixProba;
-import proba.Proba;
+import proba.MatrixProbaController;
 
 @SuppressWarnings("unchecked")
 
@@ -13,6 +12,8 @@ import proba.Proba;
 public class MainMatrixProba {
 
     public static void main(String[] args) {
+
+        System.out.println("=================================== MATRIX & DICO =====================================");
 
         MatrixProba matx = new MatrixProba(5, 5);
 
@@ -83,6 +84,14 @@ public class MainMatrixProba {
 
         System.out.println(maxH.toString());
 */
+
+
+        System.out.println("=============================== MATRIX PROBA CONTROLLER =================================");
+        MatrixProbaController controller = new MatrixProbaController(10,10);
+        controller.playerSpotted(1,1);
+        controller.playerSpotted(0,4);
+        controller.playerSpotted(2,8);
+        controller.playerSpotted(4,4);
 
 
     }
