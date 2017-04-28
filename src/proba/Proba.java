@@ -3,7 +3,7 @@ package proba;
 /**
  * Created by toon on 21/04/17.
  */
-public class Proba {
+public class Proba implements Comparable<Proba> {
 
     private int x;
     private int y;
@@ -29,5 +29,15 @@ public class Proba {
 
     public void setValue(byte value) {
         this.value = value;
+    }
+
+
+    @Override
+    public int compareTo(Proba o) {
+        return  o.getValue() - this.value;
+    }
+
+    public String toString(){
+        return "(x=" + this.x + ", y=" + this.y + ", value=" + this.value + ")";
     }
 }
