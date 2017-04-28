@@ -1,10 +1,9 @@
-package Map;
+package map;
 
 import adapter.Controller;
 import units.Enemy;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,12 +26,17 @@ public class MapGui extends JFrame {
 
     DefaultTableModel defaultTableModel;
 
+    int selectedX = -1;
+    int selectedY = -1;
+
+    boolean focus = false;
+
     public void addTile(String t, int i, int y) {
-        defaultTableModel.setValueAt( t, i, y);
+        defaultTableModel.setValueAt(t, i, y);
     }
 
-    public MapGui(int rows, int cols) {
-        super("Map.Map ORogue IA");
+    public MapGui(int cols, int rows) {
+        super("map.map ORogue IA");
         this.rows = rows;
         this.cols = cols;
         defaultTableModel = new DefaultTableModel(rows, cols) {
@@ -43,9 +47,47 @@ public class MapGui extends JFrame {
         };
 
         idtoPanelUnit = new HashMap<Integer, PanelUnit>();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                addTile(".", i, j);
+            }
+        }
+
+        initComponents();
     }
 
     public void setFocus(int x, int y) {
+        if (x == -1 && y == -1) {
+            focus = false;
+            defaultTableModel.fireTableCellUpdated(selectedX, selectedY);
+        } else {
+            System.out.println("Cell to play with x "+ x + " y " + y);
+            if (focus) {
+                int oldX = selectedX;
+                int oldY = selectedY;
+                defaultTableModel.fireTableCellUpdated(oldX, oldY);
+            }
+            focus = true;
+            selectedX = x;
+            selectedY = y;
+            defaultTableModel.fireTableCellUpdated(x, y);
+
+        }
+    }
+
+    public void notify(Tile tile) {
+        if (tile.isHide()) {
+            // we update the corresponding tile
+            this.table.setValueAt("<html><font color=\"" + "gray" + "\" >" + tile.getAscii() + "</font></html>",
+                    tile.getPosX(), tile.getPosY());
+            defaultTableModel.fireTableCellUpdated(tile.getPosX(), tile.getPosY());
+        } else {
+            // we update the corresponding tile
+            this.table.setValueAt("<html><font color=\"" + tile.getColor() + "\" >" + tile.getAscii() + "</font></html>",
+                    tile.getPosX(), tile.getPosY());
+            defaultTableModel.fireTableCellUpdated(tile.getPosX(), tile.getPosY());
+        }
 
     }
 
@@ -87,6 +129,7 @@ public class MapGui extends JFrame {
 
         for (int i =0; i < cols; i++) {
             columnModel.getColumn(i).setPreferredWidth(20);
+            columnModel.getColumn(i).setCellRenderer(new CustomRenderer());
         }
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -103,6 +146,8 @@ public class MapGui extends JFrame {
         String content_info = "<html>" +
                 "<font>Touche de déplacement : <br></font>" +
                 "<font color=blue>Z (haut)<br> Q(gauche)<br> S(bas)<br> D(droite)<br></font>" +
+                "<font>Touche de d'attaque : <br></font>" +
+                "<font color=green>U or 8(haut)<br> H or 4(gauche)<br> M or 2(bas)<br> K or 6(droite)<br></font>" +
                 "</html>";
 
         zone_info.setText(content_info);
@@ -128,9 +173,9 @@ public class MapGui extends JFrame {
         setVisible(true);
     }
 
-    public void setTile(String t, String color, int i, int y) {
-        String html = "<html><font color=\"" + color + "\">" + t + "</font></html>";
-        table.setValueAt(html, i, y);
+    public void setTile(String t, int i, int y) {
+        //String html = "<html><font color=\"" + color + "\">" + t + "</font></html>";
+        table.setValueAt(t, i, y);
         ((AbstractTableModel) table.getModel()).fireTableCellUpdated(i, y);
     }
 
@@ -143,6 +188,25 @@ public class MapGui extends JFrame {
 
     public void updateUnit(Enemy e) {
         idtoPanelUnit.get(e.getId()).update(e);
+    }
+
+
+
+    public class CustomRenderer extends DefaultTableCellRenderer
+    {
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+        {
+            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if(selectedX == row && selectedY == column && focus){
+                cellComponent.setBackground(Color.lightGray);
+            } else {
+                cellComponent.setBackground(Color.black);
+            }
+
+            return cellComponent;
+        }
     }
 
 }
