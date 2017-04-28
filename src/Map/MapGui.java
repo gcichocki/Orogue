@@ -46,7 +46,7 @@ public class MapGui extends JFrame {
     }
 
     public void setFocus(int x, int y) {
-        
+
     }
 
     public class MyKeyListener implements KeyListener {
