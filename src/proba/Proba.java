@@ -33,9 +33,7 @@ public class Proba implements Comparable<Proba> {
 
 
     @Override
-    public int compareTo(Proba o) {
-        return  this.value - o.getValue();
-    }
+    public int compareTo(Proba o) { return  this.value - o.getValue(); }
 
     public String toString(){
         return "(x=" + this.x + ", y=" + this.y + ", value=" + this.value + ")";
