@@ -1,6 +1,7 @@
 package test;
 
 import proba.BinaryHeap;
+import proba.DicoProba;
 import proba.MatrixProba;
 import proba.Proba;
 
@@ -29,9 +30,11 @@ public class MainMatrixProba {
         //matx.updateMapProba((byte)3);
         matx.printMatrix();
 
-
         matx.smoothMapProba();
+        matx.printMatrix();
+        matx.printDico();
 
+        /*
         matx.printMatrix();
         matx.updateMapProba((byte)9);
         matx.printMatrix();
@@ -39,6 +42,29 @@ public class MainMatrixProba {
         matx.printMatrix();
         matx.updateMapProba((byte)7);
         matx.printMatrix();
+        */
+
+        DicoProba dicotest = new DicoProba();
+
+        /*
+        dicotest.reset();
+        System.out.println(dicotest);
+
+        dicotest.add(matx.getProba(1,1));
+        dicotest.add(matx.getProba(0,4));
+        dicotest.add(matx.getProba(3,3));
+        System.out.println(dicotest);
+
+        System.out.println(dicotest.getListSize(0));
+        System.out.println(dicotest.getListSize(2));
+        System.out.println(dicotest.randomPick(2));
+
+        System.out.println(dicotest.contains(matx.getProba(1,1)));
+        System.out.println(matx.getProba(1,1));
+        System.out.println(dicotest.contains(matx.getProba(4,2)));
+        System.out.println();
+        */
+
 /*
         BinaryHeap<Proba> maxH = new BinaryHeap<Proba>();
         maxH.add(matx.getProba(1,1));
