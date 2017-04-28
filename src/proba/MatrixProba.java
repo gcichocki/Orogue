@@ -82,19 +82,6 @@ public class MatrixProba {
      *
      */
     public void smoothMapProba(){
-        /*
-        private byte nouvelleMap[x][y]; création d'une seconde map
-        Création d'une maxheap pour gérer les probas
-        Fill maxheap avec notre map
-        while(nouvelleMap !=Full)
-            elem = getMaxHeap()
-            list = getvoisin(elem)
-            foreach(voisin :O)
-                if(O n'est pas dans la nouvelle map ou que O<elem) => nouvelleMap(o)=o.value
-
-
-         */
-
        Proba newMapProba[][] = new Proba[sizeX][sizeY];
 
        Proba maxProba;
@@ -107,17 +94,14 @@ public class MatrixProba {
                 maxHeap.add(this.mapProba[i][j]);
             }
         }
-        //System.out.println(maxHeap.toString());
-
        // nb de case rempli dans notre nouvelle matrice
        int filled = 0;
 
 
        while( !maxHeap.isEmpty()){ //!isFull(filled) &&
-           System.out.println(maxHeap.length() + "---" + maxHeap.toString());
            maxProba = maxHeap.remove();
 
-           if(newMapProba[maxProba.getX()][maxProba.getY()].getValue() < maxProba.getValue()){
+           if(newMapProba[maxProba.getX()][maxProba.getY()].getValue() <= maxProba.getValue()){
                newMapProba[maxProba.getX()][maxProba.getY()].setValue(maxProba.getValue());
                filled++;
 
@@ -135,31 +119,11 @@ public class MatrixProba {
 
        }
 
-       this.printMatrix();
+       //this.printMatrix();
        this.mapProba = newMapProba;
-       this.printMatrix();
+       //this.printMatrix();
 
     }
-    /*maxProba = (Proba) maxHeap.remove();
-    maxValue = maxProba.getValue();
-           System.out.println(maxProba);
-
-
-    ArrayList<Proba> listNeighbours = this.getNeighbours(maxProba);
-
-           for (Proba next : listNeighbours) {
-
-
-        if (newMapProba[next.getX()][next.getY()].getValue() < next.getValue()
-                || next.getValue() < maxValue){
-
-            newMapProba[next.getX()][next.getY()].setValue(next.getValue());
-            filled++;
-        }
-    }
-
-           listNeighbours.clear();
-           */
 
     public void printMatrix(){
 

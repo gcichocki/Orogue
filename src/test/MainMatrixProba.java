@@ -18,12 +18,12 @@ public class MainMatrixProba {
 
         matx.printMatrix();
 
-        matx.setProba(1,1, (byte) 9);
-        matx.setProba(0,4, (byte) 1);
+        matx.setProba(2,2, (byte) 9);
+        /*matx.setProba(0,4, (byte) 1);
         matx.setProba(3,3, (byte) 9);
         matx.setProba(4,2, (byte) 7);
         matx.setProba(1,3, (byte) 9);
-        matx.setProba(4,4, (byte) 8);
+        matx.setProba(4,4, (byte) 8);*/
 
         matx.printMatrix();
 
@@ -33,7 +33,7 @@ public class MainMatrixProba {
 
         matx.smoothMapProba();
 
-        //matx.printMatrix();
+        matx.printMatrix();
 /*
         BinaryHeap<Proba> maxH = new BinaryHeap<Proba>();
         maxH.add(matx.getProba(1,1));

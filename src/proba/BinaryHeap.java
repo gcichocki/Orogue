@@ -90,7 +90,6 @@ public class BinaryHeap<T extends Comparable<T>> {
         length++;
         heap[length] = value;
         bubbleUp();
-        System.out.println("ON A JOUTé UN ELEM A LA HEAP MDRLOLOLOL");
     }
 
     /**
