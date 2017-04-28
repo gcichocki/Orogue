@@ -5,6 +5,10 @@ import java.util.ArrayList;
 @SuppressWarnings("unchecked")
 
 /**
+ * ATTZNTION : changer les setValue en setProba pour la actualmaxproba!!!!
+ */
+
+/**
  * Created by toon on 21/04/17.
  */
 public class MatrixProba {
@@ -41,7 +45,13 @@ public class MatrixProba {
 
     public Proba getProba(int x, int y){ return mapProba[x][y]; }
 
-    public void setProba(int x, int y, byte value){ mapProba[x][y].setValue(value); }
+    public void setProba(int x, int y, byte value){
+        mapProba[x][y].setValue(value);
+
+        if (this.actualMaxProba < value){
+            this.setActualMaxProba(value);
+        }
+    }
 
     public ArrayList<Proba> getNeighbours(Proba p){
 
@@ -59,6 +69,13 @@ public class MatrixProba {
         return neighbours;
     }
 
+    public void resetMapProba(){
+        for(int i=0;i<sizeX;i++){
+            for (int j=0; j<sizeY;j++){
+                this.mapProba[i][j].setValue((byte) 0);
+            }
+        }
+    }
 
     /**
      * @param value probas à décrémentées
@@ -123,6 +140,25 @@ public class MatrixProba {
        this.mapProba = newMapProba;
        //this.printMatrix();
 
+    }
+
+    public void getListMaxProba(ArrayList<Proba> listProba) {
+
+        for(int i=0;i<sizeX;i++){
+            for (int j=0; j<sizeY;j++){
+
+                this.mapProba[i][j] = new Proba(i ,j ,(byte) 0);
+            }
+        }
+    }
+
+    public void setListMaxProba(ArrayList<Proba> listProba) {
+
+        for (Proba p: listProba) {
+            if (p.getValue() > this.mapProba[p.getX()][p.getY()].getValue()){
+                this.mapProba[p.getX()][p.getY()].setValue(p.getValue());
+            }
+        }
     }
 
     public void printMatrix(){

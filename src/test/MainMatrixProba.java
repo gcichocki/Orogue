@@ -33,6 +33,12 @@ public class MainMatrixProba {
         matx.smoothMapProba();
 
         matx.printMatrix();
+        matx.updateMapProba((byte)9);
+        matx.printMatrix();
+        matx.updateMapProba((byte)8);
+        matx.printMatrix();
+        matx.updateMapProba((byte)7);
+        matx.printMatrix();
 /*
         BinaryHeap<Proba> maxH = new BinaryHeap<Proba>();
         maxH.add(matx.getProba(1,1));
