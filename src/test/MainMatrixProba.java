@@ -15,7 +15,7 @@ public class MainMatrixProba {
 
         MatrixProba matx = new MatrixProba(5, 5);
 
-        matx.printMatrix();
+        //matx.printMatrix();
 
         matx.setProba(2,2, (byte) 9);
         /*matx.setProba(0,4, (byte) 1);
@@ -24,7 +24,7 @@ public class MainMatrixProba {
         matx.setProba(1,3, (byte) 9);
         matx.setProba(4,4, (byte) 8);*/
 
-        matx.printMatrix();
+        //matx.printMatrix();
 
         //matx.updateMapProba((byte)3);
         matx.printMatrix();
