@@ -2,7 +2,6 @@ package test;
 
 import proba.BinaryHeap;
 import proba.MatrixProba;
-import proba.MaxHeap;
 import proba.Proba;
 
 @SuppressWarnings("unchecked")
