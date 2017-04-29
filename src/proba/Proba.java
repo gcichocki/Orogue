@@ -35,6 +35,20 @@ public class Proba implements Comparable<Proba> {
     @Override
     public int compareTo(Proba o) { return  this.value - o.getValue(); }
 
+    /**
+     * my try at redefining this.equals(o) for Proba
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj){
+        Proba o = (Proba) obj;
+        if (this.x == o.getX() && this.y == o.getY() && this.value == o.getValue()){
+            return true;
+        }
+        return false;
+    }
+
     public String toString(){
         return "(x=" + this.x + ", y=" + this.y + ", value=" + this.value + ")";
     }
