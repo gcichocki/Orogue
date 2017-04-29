@@ -35,12 +35,8 @@ public class Master {
 
     }
 
-    public void updateMap(int x, int y, String type_terrain, int type) {
-        map.updateTile(x, y, type_terrain, type);
-    }
-
-    public void updateMap(int x, int y, String type_unit, String unit) {
-        map.updateTile(x, y, type_unit, unit);
+    public void updateMap(int x, int y, String type_unit, String type) {
+        map.updateTile(x, y, type_unit, type);
     }
 
     public void updateEntity(int unitId, int hp, int posX, int posY, char symbole) {

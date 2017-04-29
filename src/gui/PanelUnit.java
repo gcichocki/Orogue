@@ -1,4 +1,4 @@
-package map;
+package gui;
 
 import units.Enemy;
 

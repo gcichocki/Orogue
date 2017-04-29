@@ -1,5 +1,7 @@
 package map;
 
+import gui.MapGui;
+
 import java.util.ArrayList;
 
 /**
@@ -59,29 +61,19 @@ public class Map {
         return map[posX][posY];
     }
 
-    public void updateTile(int x, int y, String type_unit, String unit) {
 
-        String symb = Character.character_to_sym.get(unit);
-        String color = Character.character_to_color.get(unit);
-
-        map[x][y].setValue(-1);
-        map[x][y].setColor(color);
-        map[x][y].setAscii(symb);
-
-        // we notify the map to be updated
-        for (MapGui mapGUI: listener
-                ) {
-            mapGUI.notify(map[x][y]);
-        }
-    }
-
-    public void updateTile(int x, int y, String type_terrain, int type) {
+    public void updateTile(int x, int y, String type_terrain, String type) {
 
 
         String color = Terrain.terrain_color.get(type);
         String symb = Terrain.terrain_sym.get(type);
 
-        map[x][y].setValue(type);
+        if (type_terrain.equals("terrain")) {
+            map[x][y].setValue(Integer.parseInt(type));
+        } else {
+            map[x][y].setValue(-1);
+        }
+
         map[x][y].setColor(color);
         map[x][y].setAscii(symb);
         map[x][y].setHide(false);
