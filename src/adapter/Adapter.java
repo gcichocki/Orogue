@@ -1,8 +1,6 @@
 package adapter;
 
 import map.Map;
-import map.Terrain;
-import map.Character;
 import units.Master;
 
 import java.io.*;
@@ -28,6 +26,7 @@ public class Adapter extends Thread {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
@@ -80,17 +79,15 @@ public class Adapter extends Thread {
 
         if (tab_line[3].equals("ally") || tab_line[3].equals("ennemy")) {
             String[] buf = tab_line[6].split("=");
-            String unit = buf[1];
 
             // we update the map
-            master.updateMap(x, y, type_terrain, unit);
+            master.updateMap(x, y, type_terrain, buf[1]);
         } else {
             // the type , number of the type : mountain, water, ...
             String[] buf = tab_line[4].split("=");
-            int type = Integer.parseInt(buf[1]);
 
             // we update the map
-            master.updateMap(x, y, type_terrain, type);
+            master.updateMap(x, y, type_terrain, buf[1]);
         }
 
 

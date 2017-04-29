@@ -1,6 +1,6 @@
 package adapter;
 
-import map.MapGui;
+import gui.MapGui;
 import units.Master;
 
 /**
