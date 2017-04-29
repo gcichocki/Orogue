@@ -31,12 +31,18 @@ public class Proba implements Comparable<Proba> {
         this.value = value;
     }
 
-
+    /**
+     * redefining of this.compareTo(o) for Proba
+     * (useful for comparisons in max hep)
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Proba o) { return  this.value - o.getValue(); }
 
     /**
      * my try at redefining this.equals(o) for Proba
+     * (useful for contains method in dicoProba)
      * @param obj
      * @return
      */

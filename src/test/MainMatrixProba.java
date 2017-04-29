@@ -88,10 +88,15 @@ public class MainMatrixProba {
 
         System.out.println("=============================== MATRIX PROBA CONTROLLER =================================");
         MatrixProbaController controller = new MatrixProbaController(10,10);
-        controller.playerSpotted(1,1);
-        controller.playerSpotted(0,4);
-        controller.playerSpotted(2,8);
+
+        //controller.playerSpotted(1,1);
+        //controller.playerSpotted(0,4);
+        //controller.playerSpotted(2,8);
         controller.playerSpotted(4,4);
+
+        System.out.println("DIRECTION / " + controller.pickDirection((byte)9,2));
+        System.out.println("DIRECTION / " + controller.pickDirection((byte)9,2));
+        System.out.println("DIRECTION / " + controller.pickDirection((byte)9,2));
 
 
     }

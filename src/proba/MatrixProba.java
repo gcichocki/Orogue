@@ -5,18 +5,12 @@ import java.util.ArrayList;
 @SuppressWarnings("unchecked")
 
 /**
- * ATTENTION : changer les setValue en setProba pour la actualmaxproba!!!!
- * peut être pas en fait....
- */
-
-/**
  * Created by toon on 21/04/17.
  */
 public class MatrixProba {
 
     private Proba mapProba[][];
     private DicoProba dicoProba;
-    //private byte actualMaxProba;
     private int sizeX;
     private int sizeY;
     private int total;
@@ -32,34 +26,26 @@ public class MatrixProba {
                 this.mapProba[i][j] = new Proba(i ,j ,(byte) 0);
             }
         }
-
         this.dicoProba = new DicoProba();
-        //this.actualMaxProba = 0;
     }
 
     public int getSizeX() { return sizeX; }
 
     public int getSizeY() { return sizeY; }
 
-    //public void setActualMaxProba(byte actualMaxProba) { this.actualMaxProba = actualMaxProba; }
-
-    //public byte getActualMaxProba() { return actualMaxProba; }
-
     public Proba[][] getMapProba() { return mapProba; }
 
     public Proba getProba(int x, int y){ return mapProba[x][y]; }
 
-    public void setProba(int x, int y, byte value){
-        mapProba[x][y].setValue(value);
+    public void setProba(int x, int y, byte value){ mapProba[x][y].setValue(value); }
 
-        /*
-        if (this.actualMaxProba < value){
-            this.setActualMaxProba(value);
-        }
-        */
-    }
-
-    public ArrayList<Proba> getNeighbours(Proba p){
+    /**
+     * generate a list of the adjacent neighbours of
+     * a given Proba p
+     * @param p
+     * @return
+     */
+    private ArrayList<Proba> getNeighbours(Proba p){
 
         ArrayList<Proba> neighbours = new ArrayList<>();
 
@@ -75,6 +61,9 @@ public class MatrixProba {
         return neighbours;
     }
 
+    /**
+     * resets all the values in the matrix to 0
+     */
     public void resetMapProba(){
         for(int i=0;i<sizeX;i++){
             for (int j=0; j<sizeY;j++){
@@ -97,12 +86,13 @@ public class MatrixProba {
     }
 
 
-    public boolean isFull(int filled){
+    private boolean isFull(int filled){
         return (total == filled);
     }
 
+
     /**
-     *
+     * smoothing technique on a matrix
      */
     public void smoothMapProba(){
         Proba newMapProba[][] = new Proba[sizeX][sizeY];
@@ -148,8 +138,8 @@ public class MatrixProba {
         //this.printMatrix();
         this.mapProba = newMapProba;
         //this.printMatrix();
-
     }
+
 
     public void getListMaxProba(ArrayList<Proba> listProba) {
 
@@ -170,6 +160,20 @@ public class MatrixProba {
         }
     }
 
+    /**
+     * return a Proba from the dico with a value
+     * no lower than lowBound
+     * @param lowBound
+     * @return
+     */
+    public Proba pickProba(int lowBound){
+        if (lowBound < 0){
+            resetMapProba();
+            lowBound = 0;
+        }
+        return this.dicoProba.pickRandomProba(lowBound);
+    }
+
     public String toString(){
         String matrix = "";
 
@@ -183,11 +187,17 @@ public class MatrixProba {
         return matrix;
     }
 
+    /**
+     * prints a matrix with its side
+     */
     public void printMatrix(){
         System.out.println("SIZE MATRIX : " + this.sizeX + "x" + this.sizeY + " (" + this.sizeX*this.sizeY + " cases)");
         System.out.println(this.toString());
     }
 
+    /**
+     * prints a dico with its number of elements
+     */
     public void printDico(){
         System.out.println("SIZE : " + this.dicoProba.size());
         System.out.println(this.dicoProba);

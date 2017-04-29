@@ -74,7 +74,7 @@ public class DicoProba {
      * @param index
      * @return
      */
-    public Proba randomPick(int index){
+    private Proba randomPick(int index){
         int size = this.getListSize(index);
 
         if (size != 0) {
@@ -90,6 +90,22 @@ public class DicoProba {
         int High = 10;
         int randind = r.nextInt(High-Low) + Low;
         */
+    }
+
+    public Proba pickRandomProba(int lowBound){
+        ArrayList<Proba> listRandom = new ArrayList<>();
+
+        for (int i=lowBound; i<10; i++) {
+            listRandom.add(randomPick(i));
+        }
+        if (!listRandom.isEmpty()){
+            Random r = new Random();
+            int randind = r.nextInt(listRandom.size());
+            return listRandom.get(randind);
+        }
+
+        System.out.println("***DICOPROBAS : NO PROBA PICK IN RANDOM ***");
+        return null;
     }
 
     /**
