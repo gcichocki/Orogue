@@ -120,6 +120,14 @@ public class DicoProba {
         }
     }
 
+    public int getMaxIndex(){
+        for (int res = 9; res >=0; res--){
+            if(!this.dico.get(res).isEmpty())
+                return res;
+        }
+        return 0;
+    }
+
     public String toString(){
         String print = "";
 

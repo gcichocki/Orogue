@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class MatrixProbaController {
 
     private MatrixProba matrix;
+    private int timelapse = 0;
 
     public MatrixProbaController(int sizeX, int sizeY) {
         this.matrix = new MatrixProba(sizeX, sizeY);
@@ -28,7 +29,7 @@ public class MatrixProbaController {
          * Smoothing
          * Yummy
          */
-
+        this.timelapse = 0;
         this.matrix.resetMapProba();
         this.matrix.setProba(x, y, (byte)9);
         this.matrix.smoothMapProba();
@@ -37,25 +38,22 @@ public class MatrixProbaController {
     }
 
     public void updateProba(){
-        /*
-         * update the map proba of the unit as the new turn begins
-         */
+        timelapse++;
     }
 
     /**
      * choose a new direction as a new turn begins
-     * @param value
-     * @param timelapse
      * @return
      */
-    public Proba pickDirection(byte value, int timelapse){
-        return this.matrix.pickProba(value - timelapse);
+    public Proba pickDirection(){
+        return this.matrix.pickProba(this.timelapse);
     }
 
     /**
      * unit reaction upon receiving new data from another unit
      * @param listProba
      */
+    //TODO VERIFIER AVEC LE TIMELAPSE CE QU'IL FAUT FAIRE
     public void blendProba(ArrayList<Proba> listProba){
         this.matrix.setListMaxProba(listProba);
         this.matrix.smoothMapProba();

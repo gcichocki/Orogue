@@ -166,10 +166,10 @@ public class MatrixProba {
     /**
      * return a Proba from the dico with a value
      * no lower than lowBound
-     * @param lowBound
      * @return
      */
-    public Proba pickProba(int lowBound){
+    public Proba pickProba(int timelapse){
+        int lowBound = this.dicoProba.getMaxIndex() - timelapse;
         if (lowBound < 0){
             resetMapProba();
             lowBound = 0;
