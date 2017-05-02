@@ -30,7 +30,7 @@ public class Enemy {
         this.state = AgentState.Idle;
         this.symbole = symbole;
         this.master = master;
-        this.mapController = new MatrixProbaController(10,10);
+        this.mapController = new MatrixProbaController(this.master.getMap().getCols(),this.master.getMap().getRows());
     }
 
     public int getHp() {
@@ -79,10 +79,13 @@ public class Enemy {
             case Idle:
                 break;
             case Explore:
+                //discover new map
                 break;
             case Rush:
+                //attack player
                 break;
             case Search:
+                //search for player
                 break;
         }
 
