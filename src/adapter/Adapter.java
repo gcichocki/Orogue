@@ -1,11 +1,13 @@
 package adapter;
 
 import map.Map;
+import map.Tuple;
 import units.Master;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Adapter extends Thread {
 
@@ -15,6 +17,9 @@ public class Adapter extends Thread {
     private BufferedReader reader;
     private ListenSocket ls;
     private Master master;
+
+
+    private ArrayList<Tuple<Integer, Integer>> tmpNewTiles;
 
     //parameters width=xx height=yy
 
@@ -165,6 +170,7 @@ public class Adapter extends Thread {
     public Adapter(int port, Master master) {
         this.port = port;
         this.master = master;
+        this.tmpNewTiles = new ArrayList<>();
         initSocket();
         System.out.println("Création de la socket de lecture");
         ls = new ListenSocket(reader);
