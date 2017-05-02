@@ -1,6 +1,14 @@
 package units;
 
+import adapter.Controller;
+import astar.Astar;
 import astar.Path;
+import map.Tile;
+import map.Tuple;
+import proba.MatrixProbaController;
+import proba.Proba;
+
+import java.util.ArrayList;
 
 public class Enemy {
     public enum AgentState {
@@ -17,14 +25,18 @@ public class Enemy {
     private Path path;
     private AgentState state;
     private char symbole;
+    private MatrixProbaController mapController;
+    private Master master;
 
     public Enemy(int id, int hp, int posX, int posY, char symbole, Master master) {
         this.id = id;
         this.hp = hp;
         this.posX = posX;
         this.posY = posY;
-        this.state = AgentState.Idle;
+        this.state = AgentState.Search;
         this.symbole = symbole;
+        this.master = master;
+        this.mapController = new MatrixProbaController(this.master.getMap().getCols(),this.master.getMap().getRows());
     }
 
     public int getHp() {
@@ -56,9 +68,6 @@ public class Enemy {
         this.hp = hp;
     }
 
-    public void updatePlan() {
-
-    }
 
     public int getId() {
         return id;
@@ -68,16 +77,62 @@ public class Enemy {
         return symbole;
     }
 
-    public void action() {
-        switch(state){
-            case Idle: break;
-            case Explore: break;
-            case Rush: break;
-            case Search: break;
-        }
 
+    public void updatePlan(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
+        if(playerPosition.x !=-1 && playerPosition.y != -1){
+            this.state = AgentState.Rush;
+        } else {
+            this.state = AgentState.Search;
+        }
+        this.mapController.updateProba();
     }
 
 
+    public Tuple<Integer, Integer> action(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
+        updatePlan(list, playerPosition);
+        switch(state){
+            case Idle:
+                break;
+            case Explore:
+                //discover new map
+                break;
+            case Rush:
+                rush(playerPosition);
+                break;
+            case Search:
+                search(list);
+                break;
+        }
+
+        Tile dest = path.pop();
+        return new Tuple<>(dest.getPosX(), dest.getPosY());
+    }
+
+    public void rush(Tuple<Integer, Integer> playerPosition){
+        this.mapController.playerSpotted(playerPosition.x, playerPosition.y);
+        Astar aetoile = new Astar(this.master.getMap(), this.master.getMap().getTile(this.getPosX(), this.getPosY()), this.master.getMap().getTile(playerPosition.x, playerPosition.y));
+        path = aetoile.runAstar();
+    }
+
+
+    /**
+     * the unit goal is to discover new map
+     */
+    public void explore(){
+
+
+    }
+
+    /**
+     * the player is spotted!
+     * the unit go in its direction
+     */
+    public void search(ArrayList<Tuple<Integer, Integer>> list){
+        mapController.updateProbasToZero(list);
+        Proba p = this.mapController.pickDirection();
+        Astar aetoile = new Astar(this.master.getMap(), this.master.getMap().getTile(this.getPosX(), this.getPosY()), this.master.getMap().getTile(p.getX(), p.getY()));
+        path = aetoile.runAstar();
+
+    }
 
 }

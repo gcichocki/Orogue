@@ -35,6 +35,9 @@ public class DicoProba {
      */
     public void add(Proba p){
         int index = p.getValue();
+        if(this.dico.containsValue(p)){
+            this.dico.get(index).remove(p);
+        }
         this.dico.get(index).add(p);
     }
 
@@ -115,6 +118,14 @@ public class DicoProba {
         for (int i=0; i<10; i++) {
             this.dico.get(i).clear();
         }
+    }
+
+    public int getMaxIndex(){
+        for (int res = 9; res >=0; res--){
+            if(!this.dico.get(res).isEmpty())
+                return res;
+        }
+        return 0;
     }
 
     public String toString(){

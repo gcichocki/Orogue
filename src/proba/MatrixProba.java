@@ -1,5 +1,7 @@
 package proba;
 
+import map.Tuple;
+
 import java.util.ArrayList;
 
 @SuppressWarnings("unchecked")
@@ -156,6 +158,7 @@ public class MatrixProba {
         for (Proba p: listProba) {
             if (p.getValue() > this.mapProba[p.getX()][p.getY()].getValue()){
                 this.mapProba[p.getX()][p.getY()].setValue(p.getValue());
+                dicoProba.add(p);
             }
         }
     }
@@ -163,10 +166,10 @@ public class MatrixProba {
     /**
      * return a Proba from the dico with a value
      * no lower than lowBound
-     * @param lowBound
      * @return
      */
-    public Proba pickProba(int lowBound){
+    public Proba pickProba(int timelapse){
+        int lowBound = this.dicoProba.getMaxIndex() - timelapse;
         if (lowBound < 0){
             resetMapProba();
             lowBound = 0;
@@ -187,6 +190,14 @@ public class MatrixProba {
         return matrix;
     }
 
+    public void resetArrayOfProba(ArrayList<Tuple<Integer, Integer>> list){
+        Proba p ;
+        for (Tuple t : list) {
+            mapProba[(int) t.x][(int) t.y].setValue((byte) 0);
+            dicoProba.add(getProba((int) t.x, (int) t.y));
+        }
+    }
+
     /**
      * prints a matrix with its side
      */
@@ -202,5 +213,6 @@ public class MatrixProba {
         System.out.println("SIZE : " + this.dicoProba.size());
         System.out.println(this.dicoProba);
     }
+
 
 }

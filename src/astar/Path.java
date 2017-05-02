@@ -23,4 +23,10 @@ public class Path {
     public void add(Tile t){
         this.path.add(0,t);
     }
+
+    public Tile pop(){
+        Tile t = this.path.get(0);
+        this.path.remove(0);
+        return t;
+    }
 }
