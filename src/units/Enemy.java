@@ -1,6 +1,8 @@
 package units;
 
+import adapter.Controller;
 import astar.Path;
+import proba.MatrixProbaController;
 
 public class Enemy {
     public enum AgentState {
@@ -17,6 +19,8 @@ public class Enemy {
     private Path path;
     private AgentState state;
     private char symbole;
+    private MatrixProbaController mapController;
+    private Master master;
 
     public Enemy(int id, int hp, int posX, int posY, char symbole, Master master) {
         this.id = id;
@@ -25,6 +29,8 @@ public class Enemy {
         this.posY = posY;
         this.state = AgentState.Idle;
         this.symbole = symbole;
+        this.master = master;
+        this.mapController = new MatrixProbaController(this.master.getMap().getCols(),this.master.getMap().getRows());
     }
 
     public int getHp() {
@@ -70,10 +76,17 @@ public class Enemy {
 
     public void action() {
         switch(state){
-            case Idle: break;
-            case Explore: break;
-            case Rush: break;
-            case Search: break;
+            case Idle:
+                break;
+            case Explore:
+                //discover new map
+                break;
+            case Rush:
+                //attack player
+                break;
+            case Search:
+                //search for player
+                break;
         }
 
     }
