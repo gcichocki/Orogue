@@ -35,6 +35,9 @@ public class DicoProba {
      */
     public void add(Proba p){
         int index = p.getValue();
+        if(this.dico.containsValue(p)){
+            this.dico.get(index).remove(p);
+        }
         this.dico.get(index).add(p);
     }
 

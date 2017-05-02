@@ -1,5 +1,7 @@
 package proba;
 
+import map.Tuple;
+
 import java.util.ArrayList;
 
 /**
@@ -52,23 +54,15 @@ public class MatrixProbaController {
 
     /**
      * unit reaction upon receiving new data from another unit
-     * @param x
-     * @param y
-     * @param value
-     * @param timelapse
+     * @param listProba
      */
-    public void blendProba(int x, int y, byte value, int timelapse){
-        Proba p = new Proba(x, y, (byte)(value-timelapse));
-    }
-
-    public void oldblendProba(ArrayList<Proba> listProba){
-        /*
-         * Add those probas to the unit mapProba
-         * Smooth the result
-         */
+    public void blendProba(ArrayList<Proba> listProba){
         this.matrix.setListMaxProba(listProba);
         this.matrix.smoothMapProba();
     }
 
+    public void updateProbasToZero(ArrayList<Tuple<Integer, Integer>> listProba){
+        this.matrix.resetArrayOfProba(listProba);
+    }
 
 }
