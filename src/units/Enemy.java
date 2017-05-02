@@ -18,7 +18,7 @@ public class Enemy {
     private AgentState state;
     private char symbole;
 
-    public Enemy(int id, int hp, int posX, int posY, char symbole) {
+    public Enemy(int id, int hp, int posX, int posY, char symbole, Master master) {
         this.id = id;
         this.hp = hp;
         this.posX = posX;
