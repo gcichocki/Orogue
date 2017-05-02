@@ -91,6 +91,19 @@ public class Enemy {
 
     }
 
+    /**
+     * the unit goal is to discover new map
+     */
+    public void explore(){
 
+    }
+
+    /**
+     * the player is spotted!
+     * the unit go in its direction
+     */
+    public void search(){
+
+    }
 
 }
