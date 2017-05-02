@@ -48,7 +48,7 @@ public class Master {
             Controller.getInstance().getMapGUI().updateUnit(unit);
         }
         else {
-            Enemy unit = new Enemy(unitId, hp, posX, posY, symbole);
+            Enemy unit = new Enemy(unitId, hp, posX, posY, symbole, this);
             listUnits.put(unitId, unit);
             Controller.getInstance().getMapGUI().addUnit(unit);
         }
