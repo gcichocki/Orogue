@@ -37,13 +37,13 @@ public class Adapter extends Thread {
         }
     }
 
-    private int extractY(String[] tab_line) {
-        String[] buf = tab_line[1].split("=");
+    private int extractX(String[] tab_line) {
+        String[] buf = tab_line[2].split("=");
         return Integer.parseInt(buf[1]);
     }
 
-    private int extractX(String[] tab_line) {
-        String[] buf = tab_line[2].split("=");
+    private int extractY(String[] tab_line) {
+        String[] buf = tab_line[1].split("=");
         return Integer.parseInt(buf[1]);
     }
 
@@ -55,8 +55,8 @@ public class Adapter extends Thread {
             case "parameters":
                 // x-> height, y -> width
                 System.out.println("taille de la map : " + x + " * " + y);
-                master.setMap(new Map(y, x));
-                Controller.getInstance().initGUI(y, x);
+                master.setMap(new Map(x, y));
+                Controller.getInstance().initGUI(x, y);
                 break;
             case "print":
                 updateMap(tab_line, x, y);
@@ -91,7 +91,7 @@ public class Adapter extends Thread {
                     Controller.getInstance().getMapGUI().setFocus(x, y);
                     int id = Integer.parseInt(tab_line[3].split("=")[1]);
                     System.out.println("Play unit " + id);
-                    master.playUnit(id);
+                    sendIAAction(master.playUnit(id), new Tuple<>(x, y));
                 }
 
                 // we need to see for which unit we need to move and stuff
@@ -125,7 +125,38 @@ public class Adapter extends Thread {
         System.out.println("Pos IA " + posIA.toString());
         System.out.println("Move IA " + move.toString());
 
+        if (move.x - posIA.x == -1) {
+            // north
+            System.out.println("north");
+            action = "north\n";
+        } else if (move.x - posIA.x == 1) {
+            // south
+            System.out.println("south");
+            action = "south\n";
+        } else if (move.y - posIA.y == -1) {
+            // east
+            System.out.println("east");
+            action = "east\n";
+        } else if (move.y - posIA.y == 1) {
+            // west
+            System.out.println("west");
+            action = "west\n";
+        }
+        else {
+            System.out.println("Ne fait rien");
+        }
 
+        try {
+            if(action != "") {
+                writer.write(action);
+                writer.flush();
+                //Controller.getInstance().setStatus(Controller.Status.WAIT);
+                Controller.getInstance().getMapGUI().setFocus(-1, -1);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendAction(String key) {

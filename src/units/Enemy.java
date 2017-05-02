@@ -36,7 +36,8 @@ public class Enemy {
         this.state = AgentState.Search;
         this.symbole = symbole;
         this.master = master;
-        this.mapController = new MatrixProbaController(this.master.getMap().getCols(),this.master.getMap().getRows());
+        this.path = new Path();
+        this.mapController = new MatrixProbaController(this.master.getMap().getRows(),this.master.getMap().getCols());
     }
 
     public int getHp() {
@@ -103,15 +104,19 @@ public class Enemy {
                 search(list);
                 break;
         }
-
+        System.out.println("path size : " + path.getPath().toString());
         Tile dest = path.pop();
         return new Tuple<>(dest.getPosX(), dest.getPosY());
     }
 
     public void rush(Tuple<Integer, Integer> playerPosition){
         this.mapController.playerSpotted(playerPosition.x, playerPosition.y);
-        Astar aetoile = new Astar(this.master.getMap(), this.master.getMap().getTile(this.getPosX(), this.getPosY()), this.master.getMap().getTile(playerPosition.x, playerPosition.y));
+        Astar aetoile = new Astar(
+                this.master.getMap(),
+                this.master.getMap().getTile(this.getPosX(), this.getPosY()),
+                this.master.getMap().getTile(playerPosition.x, playerPosition.y));
         path = aetoile.runAstar();
+        path.pop();
     }
 
 
@@ -130,9 +135,13 @@ public class Enemy {
     public void search(ArrayList<Tuple<Integer, Integer>> list){
         mapController.updateProbasToZero(list);
         Proba p = this.mapController.pickDirection();
-        Astar aetoile = new Astar(this.master.getMap(), this.master.getMap().getTile(this.getPosX(), this.getPosY()), this.master.getMap().getTile(p.getX(), p.getY()));
+        System.out.println("Proba : " + p.toString());
+        Astar aetoile = new Astar(
+                this.master.getMap(),
+                this.master.getMap().getTile(this.getPosX(), this.getPosY()),
+                this.master.getMap().getTile(p.getX(), p.getY()));
         path = aetoile.runAstar();
-
+        path.pop();
     }
 
 }

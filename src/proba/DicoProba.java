@@ -35,7 +35,7 @@ public class DicoProba {
      */
     public void add(Proba p){
         int index = p.getValue();
-        if(this.dico.containsValue(p)){
+        if(this.dico.get(index).contains(p)){
             this.dico.get(index).remove(p);
         }
         this.dico.get(index).add(p);
@@ -73,7 +73,7 @@ public class DicoProba {
     }
 
     /**
-     * picks a random Proba inside a list ofthe specified proba value
+     * picks a random Proba inside a list of the specified proba value
      * @param index
      * @return
      */
@@ -83,6 +83,7 @@ public class DicoProba {
         if (size != 0) {
             Random r = new Random();
             int randind = r.nextInt(size);
+            //System.out.println();
             return this.dico.get(index).get(randind);
         }
         System.out.println("*** DICOPROBAS : No element in the list " + index + " ***");
@@ -99,11 +100,20 @@ public class DicoProba {
         ArrayList<Proba> listRandom = new ArrayList<>();
 
         for (int i=lowBound; i<10; i++) {
-            listRandom.add(randomPick(i));
+            Proba p = randomPick(i);
+
+            if (p != null) {
+                listRandom.add(p);
+            }
         }
         if (!listRandom.isEmpty()){
             Random r = new Random();
             int randind = r.nextInt(listRandom.size());
+            System.out.println("random index " + randind);
+            System.out.println("Print list " + listRandom.size());
+            for (Proba p: listRandom) {
+                System.out.println("P : " + p);
+            }
             return listRandom.get(randind);
         }
 

@@ -30,12 +30,12 @@ public class Master {
         posEnemyByUnit.put(id, posEnemy);
     }
 
-    public void playUnit(int id) {
+    public Tuple<Integer, Integer> playUnit(int id) {
         // show the tiles saw by this unit
         System.out.println(tmpNewTilesByUnit.get(id).toString());
         System.out.println(posEnemyByUnit.get(id).toString());
 
-        listUnits.get(id).action();
+        return  listUnits.get(id).action(tmpNewTilesByUnit.get(id), posEnemyByUnit.get(id));
     }
 
 
