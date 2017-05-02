@@ -18,8 +18,10 @@ public class Adapter extends Thread {
     private ListenSocket ls;
     private Master master;
 
-
+    // new tiles seen by the unit, reset when we see it
     private ArrayList<Tuple<Integer, Integer>> tmpNewTiles;
+    // pos enemy, if seen by the last unit else set to -1 -1
+    private Tuple<Integer, Integer> posEnemy;
 
     //parameters width=xx height=yy
 
@@ -58,19 +60,41 @@ public class Adapter extends Thread {
                 break;
             case "print":
                 updateMap(tab_line, x, y);
+                // on ajoute a la cell a la liste des cell vue par cette unité
+
                 if(tab_line[3].equals("ally") ) {
+                    // c'est un ally on met a jour ca map de case vue
                     int id = Integer.parseInt(tab_line[4].split("=")[1]);
                     int hp = Integer.parseInt(tab_line[5].split("=")[1]);
                     char symbole = tab_line[6].split("=")[1].charAt(0);
                     master.updateEntity(id, hp, x, y,symbole);
+                    // on met a jour les cases de cette unit
+                    master.setNewTilesUnit(id, tmpNewTiles);
+                    master.setPosEnemyByUnit(id, posEnemy);
+                    // on reset les cases découverte
+                    tmpNewTiles = new ArrayList<>();
+                    posEnemy = new Tuple<>(-1, -1);
+                } else if (tab_line[3].equals("ennemy")) {
+                    // c'est la pos de l'ennemy vue par cette unit
+                    posEnemy = new Tuple<>(x,y);
+                } else {
+                    // sinon c'est un terrain decouvert par l'unit
+                    tmpNewTiles.add(new Tuple<>(x, y));
                 }
                 break;
             case "action?":
-                // we change the controller status to allow the user input (action)
-                Controller.getInstance().setStatus(Controller.Status.ACTION);
-                Controller.getInstance().getMapGUI().setFocus(x, y);
+                if (!Controller.getInstance().isIA()) {
+                    // we change the controller status to allow the user input (action)
+                    Controller.getInstance().setStatus(Controller.Status.ACTION);
+                    Controller.getInstance().getMapGUI().setFocus(x, y);
+                } else {
+                    Controller.getInstance().getMapGUI().setFocus(x, y);
+                    int id = Integer.parseInt(tab_line[3].split("=")[1]);
+                    System.out.println("Play unit " + id);
+                    master.playUnit(id);
+                }
+
                 // we need to see for which unit we need to move and stuff
-                //TODO
                 break;
             case "hide":
                 master.hide(x, y);
@@ -94,21 +118,14 @@ public class Adapter extends Thread {
             // we update the map
             master.updateMap(x, y, type_terrain, buf[1]);
         }
+    }
+
+    public void sendIAAction(Tuple<Integer, Integer> move, Tuple<Integer, Integer> posIA) {
+        String action = "";
+        System.out.println("Pos IA " + posIA.toString());
+        System.out.println("Move IA " + move.toString());
 
 
-        /*
-        if(tab_line[3].equals("terrain")) {
-
-            master.updateMap(x, y, Terrain.terrain_sym.get(type), Terrain.terrain_color.get(type), type, false);
-        }
-        if (tab_line[3].equals("ally")) {
-
-            master.updateMap(x, y, Character.character_to_sym.get(buf[1]), Character.character_to_color.get(buf[1]), -1);
-        }
-        if (tab_line[3].equals("ennemy")) {
-            String[] buf = tab_line[6].split("=");
-            master.updateMap(x, y, Character.character_to_sym.get(buf[1]), Character.character_to_color.get(buf[1]), -1);
-        }*/
     }
 
     public void sendAction(String key) {
@@ -171,6 +188,7 @@ public class Adapter extends Thread {
         this.port = port;
         this.master = master;
         this.tmpNewTiles = new ArrayList<>();
+        this.posEnemy = new Tuple<>(-1,-1);
         initSocket();
         System.out.println("Création de la socket de lecture");
         ls = new ListenSocket(reader);

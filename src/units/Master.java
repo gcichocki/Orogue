@@ -2,14 +2,12 @@ package units;
 
 import adapter.Controller;
 import map.Map;
+import map.Tuple;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Master {
-    public void hide(int x, int y) {
-        map.hide(x, y);
-    }
-
     public enum MasterState {
         Idle,
         On
@@ -17,10 +15,36 @@ public class Master {
     private HashMap<Integer, Enemy> listUnits;
     private Map map;
     private MasterState state;
+    private HashMap<Integer, ArrayList<Tuple<Integer, Integer>>> tmpNewTilesByUnit;
+    private HashMap<Integer, Tuple<Integer, Integer>> posEnemyByUnit;
+
+    public void hide(int x, int y) {
+        map.hide(x, y);
+    }
+
+    public void setNewTilesUnit(int id, ArrayList<Tuple<Integer, Integer>> tmpNewTiles) {
+        tmpNewTilesByUnit.put(id, tmpNewTiles);
+    }
+
+    public void setPosEnemyByUnit(int id, Tuple<Integer,Integer> posEnemy) {
+        posEnemyByUnit.put(id, posEnemy);
+    }
+
+    public void playUnit(int id) {
+        // show the tiles saw by this unit
+        System.out.println(tmpNewTilesByUnit.get(id).toString());
+        System.out.println(posEnemyByUnit.get(id).toString());
+
+        listUnits.get(id).action();
+    }
+
+
 
     public Master() {
         this.listUnits = new HashMap<>();
         this.state = MasterState.Idle;
+        this.tmpNewTilesByUnit = new HashMap<>();
+        this.posEnemyByUnit = new HashMap<>();
     }
 
     public void setMap(Map map) {
