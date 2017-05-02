@@ -59,6 +59,7 @@ public class Tile {
         this.color = "grey";
         this.posX = posX;
         this.posY = posY;
+        this.value = -1;
     }
 
     public String getAscii() {

@@ -31,6 +31,16 @@ public class Controller {
         WAIT
     }
 
+    public boolean isIA() {
+        return isIA;
+    }
+
+    public void setIA(boolean IA) {
+        isIA = IA;
+    }
+
+    public boolean isIA = false;
+
     private Status status;
 
     private static Controller INSTANCE = new Controller();

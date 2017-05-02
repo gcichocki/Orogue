@@ -100,7 +100,7 @@ public class MapGui extends JFrame {
             selectedY = y;
             defaultTableModel.fireTableCellUpdated(x, y);
 
-            scrollPane.getViewport().setViewPosition(new Point(selectedY, selectedX));
+            //scrollPane.getViewport().setViewPosition(new Point(selectedY, selectedX));
             //scrollToCenter(table, x, y);
             //scrollPane.getViewport().setViewPosition(new Point(x, y));
         }

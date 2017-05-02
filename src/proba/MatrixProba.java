@@ -29,6 +29,8 @@ public class MatrixProba {
             }
         }
         this.dicoProba = new DicoProba();
+        //TODO to change
+        resetMapProba();
     }
 
     public int getSizeX() { return sizeX; }
@@ -70,8 +72,11 @@ public class MatrixProba {
         for(int i=0;i<sizeX;i++){
             for (int j=0; j<sizeY;j++){
                 this.mapProba[i][j].setValue((byte) 0);
+                //TODO a ameliorer
+                this.dicoProba.add(getProba(i,j));
             }
         }
+
     }
 
     /**
