@@ -1,6 +1,5 @@
 package units;
 
-import adapter.Controller;
 import astar.Astar;
 import astar.Path;
 import map.Tile;
