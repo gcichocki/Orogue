@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Master {
+    public boolean IAHasSeenEnemy(int id) {
+        return posEnemyByUnit.get(id) != null && (posEnemyByUnit.get(id).x != -1 && posEnemyByUnit.get(id).y != -1);
+    }
+
     public enum MasterState {
         Idle,
         On
@@ -22,8 +26,11 @@ public class Master {
         map.hide(x, y);
     }
 
-    public void setNewTilesUnit(int id, ArrayList<Tuple<Integer, Integer>> tmpNewTiles) {
-        tmpNewTilesByUnit.put(id, tmpNewTiles);
+    public void addNewTilesByUnit(int id, Tuple<Integer, Integer> newTile) {
+        //tmpNewTilesByUnit.put(id, tmpNewTiles);
+        tmpNewTilesByUnit.putIfAbsent(id, new ArrayList<>());
+
+        tmpNewTilesByUnit.get(id).add(newTile);
     }
 
     public void setPosEnemyByUnit(int id, Tuple<Integer,Integer> posEnemy) {
@@ -33,6 +40,8 @@ public class Master {
     public Action playUnit(int id) {
         // show the tiles saw by this unit
         System.out.println(tmpNewTilesByUnit.get(id).toString());
+        // if we didn't saw the enemy
+        posEnemyByUnit.putIfAbsent(id, new Tuple<>(-1, -1));
         System.out.println(posEnemyByUnit.get(id).toString());
 
         return listUnits.get(id).action(tmpNewTilesByUnit.get(id), posEnemyByUnit.get(id));
@@ -55,8 +64,8 @@ public class Master {
         return map;
     }
 
-    public void notifyUnit() {
-
+    public int getNbIA() {
+        return listUnits.size();
     }
 
     public void updateMap(int x, int y, String type_unit, String type) {

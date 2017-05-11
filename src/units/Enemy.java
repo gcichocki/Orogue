@@ -78,14 +78,11 @@ public class Enemy {
         return symbole;
     }
 
-
-
-
-
     public void updatePlan(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
         if(playerPosition.x !=-1 && playerPosition.y != -1){
             Tile pos = new Tile(this.posX, this.posY);
             if (pos.isNeighbours(playerPosition)){
+                //System.out.println("Neighbour");
                 this.state = AgentState.Attack;
             }
             else {

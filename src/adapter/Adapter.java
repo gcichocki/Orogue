@@ -25,7 +25,9 @@ public class Adapter extends Thread {
     // pos enemy, if seen by the last unit else set to -1 -1
     private Tuple<Integer, Integer> posEnemy;
 
-    private int last_id_unit = 0;
+    private int last_id_unit = 1;
+
+    //private int nb_action = 0;
 
     //parameters width=xx height=yy
 
@@ -73,17 +75,27 @@ public class Adapter extends Thread {
                     char symbole = tab_line[6].split("=")[1].charAt(0);
                     master.updateEntity(last_id_unit, hp, x, y,symbole);
                     // on met a jour les cases de cette unit
-                    master.setNewTilesUnit(last_id_unit, tmpNewTiles);
-                    master.setPosEnemyByUnit(last_id_unit, posEnemy);
+                    //master.setNewTilesUnit(last_id_unit, tmpNewTiles);
+                    //master.setPosEnemyByUnit(last_id_unit, posEnemy);
 
                 } else if (tab_line[3].equals("ennemy")) {
-                    // c'est la pos de l'ennemy vue par cette unit
-                    posEnemy = new Tuple<>(x,y);
-                    master.setPosEnemyByUnit(last_id_unit, posEnemy);
+                    // sur une condition, quand les joueurs on finit de jouer il faudrait récupérer le dernier
+                    // move du joueur qui est envoyé après
+                    /*if (nb_action == 0) {
+                        // le joueur viens de bouger on met a jour uniquement les IA qui l'avaient vu
+                        for (int i = 1; i <= master.getNbIA(); i++) {
+                            if (master.IAHasSeenEnemy(i)) {
+                                master.setPosEnemyByUnit(i, new Tuple<>(x, y));
+                            }
+                        }
+                    } else {*/
+                        // c'est la pos de l'ennemy vue par cette unit
+                        master.setPosEnemyByUnit(last_id_unit, new Tuple<>(x,y));
+                    //}
                 } else {
                     // sinon c'est un terrain decouvert par l'unit
-                    tmpNewTiles.add(new Tuple<>(x, y));
-                    master.setNewTilesUnit(last_id_unit, tmpNewTiles);
+                    //tmpNewTiles.add(new Tuple<>(x, y));
+                    master.addNewTilesByUnit(last_id_unit, new Tuple<>(x, y));
                 }
                 break;
             case "action?":
@@ -94,12 +106,14 @@ public class Adapter extends Thread {
                 } else {
                     Controller.getInstance().getMapGUI().setFocus(x, y);
                     int id = Integer.parseInt(tab_line[3].split("=")[1]);
-                    // on reset les cases découverte
-                    tmpNewTiles = new ArrayList<>();
-                    posEnemy = new Tuple<>(-1, -1);
 
-                    System.out.println("Play unit " + id);
+                    //System.out.println("Play unit " + id);
                     sendIAAction(master.playUnit(id), new Tuple<>(x, y));
+                    //nb_action++;
+
+                    /*if (nb_action == master.getNbIA()) {
+                        nb_action = 0;
+                    }*/
                 }
 
                 // we need to see for which unit we need to move and stuff
@@ -132,9 +146,9 @@ public class Adapter extends Thread {
 
         Tuple<Integer, Integer> move = new Tuple<>(actionIA.getX(), actionIA.getY());
         String action = "";
-        System.out.println("Pos IA " + posIA.toString());
-        System.out.println("Move IA " + move.toString());
-        
+        //System.out.println("Pos IA " + posIA.toString());
+        //System.out.println("Move IA " + move.toString());
+
         if (actionIA.getAction() == Action.ActionType.Move) {
             if (move.y - posIA.y == -1) {
                 // north

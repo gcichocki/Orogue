@@ -114,9 +114,9 @@ public class Tile {
             return true;
         if(this.posX == player.x+1 && this.posY == player.y)
             return true;
-        if(this.posX == player.x-1 && this.posY == player.y-1)
+        if(this.posX == player.x && this.posY == player.y-1)
             return true;
-        if(this.posX == player.x-1 && this.posY == player.y+1)
+        if(this.posX == player.x && this.posY == player.y+1)
             return true;
 
         return false;
