@@ -38,12 +38,12 @@ public class Adapter extends Thread {
     }
 
     private int extractX(String[] tab_line) {
-        String[] buf = tab_line[2].split("=");
+        String[] buf = tab_line[1].split("=");
         return Integer.parseInt(buf[1]);
     }
 
     private int extractY(String[] tab_line) {
-        String[] buf = tab_line[1].split("=");
+        String[] buf = tab_line[2].split("=");
         return Integer.parseInt(buf[1]);
     }
 
@@ -54,9 +54,9 @@ public class Adapter extends Thread {
         switch (tab_line[0]) {
             case "parameters":
                 // x-> height, y -> width
-                System.out.println("taille de la map : " + x + " * " + y);
-                master.setMap(new Map(x, y));
-                Controller.getInstance().initGUI(x, y);
+                System.out.println("width " + x + " height " + y);
+                master.setMap(new Map(y, x));
+                Controller.getInstance().initGUI(y, x);
                 break;
             case "print":
                 updateMap(tab_line, x, y);
@@ -125,19 +125,19 @@ public class Adapter extends Thread {
         System.out.println("Pos IA " + posIA.toString());
         System.out.println("Move IA " + move.toString());
 
-        if (move.x - posIA.x == -1) {
+        if (move.y - posIA.y == -1) {
             // north
             System.out.println("north");
             action = "north\n";
-        } else if (move.x - posIA.x == 1) {
+        } else if (move.y - posIA.y == 1) {
             // south
             System.out.println("south");
             action = "south\n";
-        } else if (move.y - posIA.y == -1) {
+        } else if (move.x - posIA.x == -1) {
             // east
             System.out.println("east");
             action = "east\n";
-        } else if (move.y - posIA.y == 1) {
+        } else if (move.x - posIA.x == 1) {
             // west
             System.out.println("west");
             action = "west\n";

@@ -19,9 +19,9 @@ import java.util.HashMap;
  */
 public class MapGui extends JFrame {
 
-    int rows;
+    int width;
 
-    int cols;
+    int height;
 
     JTable table;
     BorderLayout root_layout;
@@ -37,15 +37,16 @@ public class MapGui extends JFrame {
 
     boolean focus = false;
 
-    public void addTile(String t, int i, int y) {
-        defaultTableModel.setValueAt(t, i, y);
+    public void addTile(String t, int x, int y) {
+        defaultTableModel.setValueAt(t, x, y);
     }
 
-    public MapGui(int cols, int rows) {
+    public MapGui(int height, int width) {
         super("map.map ORogue IA");
-        this.rows = rows;
-        this.cols = cols;
-        defaultTableModel = new DefaultTableModel(rows, cols) {
+        this.width = width;
+        this.height = height;
+
+        defaultTableModel = new DefaultTableModel(height, width) {
             public boolean isCellEditable(int row, int column)
             {
                 return false;//This causes all cells to be not editable
@@ -54,8 +55,8 @@ public class MapGui extends JFrame {
 
         idtoPanelUnit = new HashMap<Integer, PanelUnit>();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 addTile(".", i, j);
             }
         }
@@ -84,7 +85,8 @@ public class MapGui extends JFrame {
         viewport.scrollRectToVisible(rect);
     }
 
-    public void setFocus(int x, int y) {
+    public void setFocus(int y, int x) {
+
         if (x == -1 && y == -1) {
             focus = false;
             defaultTableModel.fireTableCellUpdated(selectedX, selectedY);
@@ -115,13 +117,13 @@ public class MapGui extends JFrame {
         if (tile.isHide()) {
             // we update the corresponding tile
             this.table.setValueAt("<html><font color=\"" + "gray" + "\" >" + tile.getAscii() + "</font></html>",
-                    tile.getPosX(), tile.getPosY());
-            defaultTableModel.fireTableCellUpdated(tile.getPosX(), tile.getPosY());
+                    tile.getPosY(), tile.getPosX());
+            defaultTableModel.fireTableCellUpdated(tile.getPosY(), tile.getPosX());
         } else {
             // we update the corresponding tile
             this.table.setValueAt("<html><font color=\"" + tile.getColor() + "\" >" + tile.getAscii() + "</font></html>",
-                    tile.getPosX(), tile.getPosY());
-            defaultTableModel.fireTableCellUpdated(tile.getPosX(), tile.getPosY());
+                    tile.getPosY(), tile.getPosX());
+            defaultTableModel.fireTableCellUpdated(tile.getPosY(), tile.getPosX());
         }
 
     }
@@ -167,7 +169,7 @@ public class MapGui extends JFrame {
 
             TableColumnModel columnModel = table.getColumnModel();
 
-            for (int i = 0; i < cols; i++) {
+            for (int i = 0; i < width; i++) {
                 columnModel.getColumn(i).setPreferredWidth(20);
                 columnModel.getColumn(i).setCellRenderer(new CustomRenderer());
             }

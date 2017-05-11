@@ -12,9 +12,9 @@ public class Map {
     // map.map
     private static Tile[][] map;
 
-    private int rows;
+    private int width;
 
-    private int cols;
+    private int height;
 
     private ArrayList<MapGui> listener;
 
@@ -24,19 +24,19 @@ public class Map {
 
     /**
      * Create a map form the size given in parameter, with only unknow cases
-     * @param cols
-     * @param rows
+     * @param width
+     * @param height
      */
-    public Map(int cols, int rows) {
+    public Map(int width, int height) {
 
-        this.rows = rows;
-        this.cols = cols;
+        this.width = width;
+        this.height = height;
         this.listener =  new ArrayList<>();
 
-        map = new Tile[rows][cols];
+        map = new Tile[height][width];
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 map[i][j] = new Tile(i, j);
             }
         }
@@ -44,11 +44,11 @@ public class Map {
 
 
     public int getRows() {
-        return rows;
+        return height;
     }
 
     public int getCols() {
-        return cols;
+        return width;
     }
 
     /**
