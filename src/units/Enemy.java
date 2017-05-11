@@ -84,8 +84,13 @@ public class Enemy {
 
     public void updatePlan(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
         if(playerPosition.x !=-1 && playerPosition.y != -1){
-
-            this.state = AgentState.Rush;
+            Tile pos = new Tile(this.posX, this.posY);
+            if (pos.isNeighbours(playerPosition)){
+                this.state = AgentState.Attack;
+            }
+            else {
+                this.state = AgentState.Rush;
+            }
         } else {
             this.state = AgentState.Search;
         }
@@ -100,7 +105,7 @@ public class Enemy {
             case Idle:
                 break;
             case Attack:
-                toDo = attack();
+                toDo = attack(playerPosition);
                 break;
             case Explore:
                 //discover new map
@@ -116,6 +121,7 @@ public class Enemy {
         return toDo;
     }
 
+
     public Action rush(Tuple<Integer, Integer> playerPosition){
         this.mapController.playerSpotted(playerPosition.x, playerPosition.y);
         Astar aetoile = new Astar(
@@ -129,17 +135,16 @@ public class Enemy {
         return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
     }
 
-    public Action attack(){
 
-        return null;
+    public Action attack(Tuple<Integer, Integer> playerPosition){
+        return new Action(playerPosition.x, playerPosition.y, Action.ActionType.Attack);
     }
     /**
      * the unit goal is to discover new map
      */
     public void explore(){
-
-
     }
+
 
     /**
      * the player is spotted!
