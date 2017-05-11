@@ -29,4 +29,12 @@ public class Path {
         this.path.remove(0);
         return t;
     }
+
+    public String toString(){
+        String buffer ="";
+        for (Tile t:path) {
+            buffer += t+"\n";
+        }
+        return buffer;
+    }
 }
