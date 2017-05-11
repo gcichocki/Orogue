@@ -1,5 +1,9 @@
 package map;
 
+import proba.Proba;
+
+import java.util.ArrayList;
+
 /**
  * Created by FatePc on 3/4/2017.
  */
@@ -101,6 +105,13 @@ public class Tile {
 
     public void setHide(boolean hide) {
         this.hide = hide;
+    }
+
+    public Boolean isNeighbours(Tile t){
+        boolean b = false;
+        
+
+        return b;
     }
 }
 
