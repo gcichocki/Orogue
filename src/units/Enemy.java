@@ -14,7 +14,8 @@ public class Enemy {
         Idle,
         Explore,
         Rush,
-        Search
+        Search,
+        Attack
     }
 
     private int id;
@@ -78,8 +79,12 @@ public class Enemy {
     }
 
 
+
+
+
     public void updatePlan(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
         if(playerPosition.x !=-1 && playerPosition.y != -1){
+
             this.state = AgentState.Rush;
         } else {
             this.state = AgentState.Search;
@@ -92,6 +97,9 @@ public class Enemy {
         updatePlan(list, playerPosition);
         switch(state){
             case Idle:
+                break;
+            case Attack:
+                attack();
                 break;
             case Explore:
                 //discover new map
@@ -118,7 +126,9 @@ public class Enemy {
         path.pop();
     }
 
+    public void attack(){
 
+    }
     /**
      * the unit goal is to discover new map
      */
