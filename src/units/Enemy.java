@@ -93,30 +93,30 @@ public class Enemy {
     }
 
 
-    public Tuple<Integer, Integer> action(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
+    public Action action(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
+        Action toDo = null;
         updatePlan(list, playerPosition);
         switch(state){
             case Idle:
                 break;
             case Attack:
-                attack();
+                toDo = attack();
                 break;
             case Explore:
                 //discover new map
                 break;
             case Rush:
-                rush(playerPosition);
+                toDo = rush(playerPosition);
                 break;
             case Search:
-                search(list);
+                toDo = search(list);
                 break;
         }
         System.out.println("path : " + path.getPath().toString());
-        Tile dest = path.pop();
-        return new Tuple<>(dest.getPosX(), dest.getPosY());
+        return toDo;
     }
 
-    public void rush(Tuple<Integer, Integer> playerPosition){
+    public Action rush(Tuple<Integer, Integer> playerPosition){
         this.mapController.playerSpotted(playerPosition.x, playerPosition.y);
         Astar aetoile = new Astar(
                 this.master.getMap(),
@@ -124,10 +124,14 @@ public class Enemy {
                 this.master.getMap().getTile(playerPosition.x, playerPosition.y));
         path = aetoile.runAstar();
         path.pop();
+
+        Tile dest = path.pop();
+        return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
     }
 
-    public void attack(){
+    public Action attack(){
 
+        return null;
     }
     /**
      * the unit goal is to discover new map
@@ -141,7 +145,7 @@ public class Enemy {
      * the player is spotted!
      * the unit go in its direction
      */
-    public void search(ArrayList<Tuple<Integer, Integer>> list){
+    public Action search(ArrayList<Tuple<Integer, Integer>> list){
         /*Tile obj = path.getPath().get(path.getPath().size()-1);
         if(obj.getValue() != this.master.getMap().getTile(obj.getPosX(), obj.getPosY()).getValue()){*/
             mapController.updateProbasToZero(list);
@@ -157,6 +161,9 @@ public class Enemy {
                     this.master.getMap().getTile(p.getX(), p.getY()));
             path = aetoile.runAstar();
             path.pop();
+
+            Tile dest = path.pop();
+            return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
        // }
 
     }
