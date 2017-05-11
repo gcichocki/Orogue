@@ -1,6 +1,5 @@
 package units;
 
-import adapter.Controller;
 import astar.Astar;
 import astar.Path;
 import map.Tile;
@@ -104,7 +103,7 @@ public class Enemy {
                 search(list);
                 break;
         }
-        System.out.println("path size : " + path.getPath().toString());
+        System.out.println("path : " + path.getPath().toString());
         Tile dest = path.pop();
         return new Tuple<>(dest.getPosX(), dest.getPosY());
     }
@@ -133,15 +132,19 @@ public class Enemy {
      * the unit go in its direction
      */
     public void search(ArrayList<Tuple<Integer, Integer>> list){
-        mapController.updateProbasToZero(list);
-        Proba p = this.mapController.pickDirection();
-        System.out.println("Proba : " + p.toString());
-        Astar aetoile = new Astar(
-                this.master.getMap(),
-                this.master.getMap().getTile(this.getPosX(), this.getPosY()),
-                this.master.getMap().getTile(p.getX(), p.getY()));
-        path = aetoile.runAstar();
-        path.pop();
+        /*Tile obj = path.getPath().get(path.getPath().size()-1);
+        if(obj.getValue() != this.master.getMap().getTile(obj.getPosX(), obj.getPosY()).getValue()){*/
+            mapController.updateProbasToZero(list);
+            Proba p = this.mapController.pickDirection();
+            System.out.println("Proba : " + p.toString());
+            Astar aetoile = new Astar(
+                    this.master.getMap(),
+                    this.master.getMap().getTile(this.getPosX(), this.getPosY()),
+                    this.master.getMap().getTile(p.getX(), p.getY()));
+            path = aetoile.runAstar();
+            path.pop();
+       // }
+
     }
 
 }

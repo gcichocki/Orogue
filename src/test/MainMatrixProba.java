@@ -93,6 +93,9 @@ public class MainMatrixProba {
         //controller.playerSpotted(0,4);
         //controller.playerSpotted(2,8);
         controller.playerSpotted(4,4);
+        controller.updateProba();
+
+        controller.printAll();
 
         System.out.println("DIRECTION / " + controller.pickDirection());
         System.out.println("DIRECTION / " + controller.pickDirection());

@@ -121,6 +121,32 @@ public class DicoProba {
         return null;
     }
 
+    public Proba pickRandomProbaReal(int lowBound){
+        ArrayList<Proba> listRandom = new ArrayList<>();
+
+        for (int i=lowBound; i<10; i++) {
+            for (Proba tmp_p : dico.get(i)) {
+                if (tmp_p != null) {
+                    listRandom.add(tmp_p);
+                }
+            }
+
+        }
+        if (!listRandom.isEmpty()){
+            Random r = new Random();
+            int randind = r.nextInt(listRandom.size());
+            System.out.println("random index " + randind);
+            System.out.println("Print list " + listRandom.size());
+            for (Proba p: listRandom) {
+                System.out.println("P : " + p);
+            }
+            return listRandom.get(randind);
+        }
+
+        System.out.println("***DICOPROBAS : NO PROBA PICK IN RANDOM ***");
+        return null;
+    }
+
     /**
      * resets the lists of the dico
      */

@@ -179,7 +179,7 @@ public class MatrixProba {
             resetMapProba();
             lowBound = 0;
         }
-        return this.dicoProba.pickRandomProba(lowBound);
+        return this.dicoProba.pickRandomProbaReal(lowBound);
     }
 
     public String toString(){

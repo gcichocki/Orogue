@@ -33,8 +33,8 @@ public class MatrixProbaController {
         this.matrix.resetMapProba();
         this.matrix.setProba(x, y, (byte)9);
         this.matrix.smoothMapProba();
-        this.matrix.printMatrix();
-        this.matrix.printDico();
+        //this.matrix.printMatrix();
+        //this.matrix.printDico();
     }
 
     public void updateProba(){
@@ -61,6 +61,11 @@ public class MatrixProbaController {
 
     public void updateProbasToZero(ArrayList<Tuple<Integer, Integer>> listProba){
         this.matrix.resetArrayOfProba(listProba);
+    }
+
+    public void printAll(){
+        this.matrix.printMatrix();
+        this.matrix.printDico();
     }
 
 }
