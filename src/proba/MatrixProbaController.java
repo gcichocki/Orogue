@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class MatrixProbaController {
 
     private MatrixProba matrix;
-    private int timelapse = 0;
+    private int timelapse = 9;
 
     public MatrixProbaController(int sizeX, int sizeY) {
         this.matrix = new MatrixProba(sizeX, sizeY);

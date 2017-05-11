@@ -21,14 +21,16 @@ public class MatrixProba {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.total = sizeX*sizeY;
-
+        this.dicoProba = new DicoProba();
         this.mapProba = new Proba[sizeX][sizeY];
         for(int i=0;i<sizeX;i++){
             for (int j=0; j<sizeY;j++){
-                this.mapProba[i][j] = new Proba(i ,j ,(byte) 0);
+                Proba p = new Proba(i ,j ,(byte) 0);
+                this.mapProba[i][j] = p;
+                this.dicoProba.add(p);
             }
         }
-        this.dicoProba = new DicoProba();
+
         //TODO to change
         resetMapProba();
     }
