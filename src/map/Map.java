@@ -69,6 +69,7 @@ public class Map {
         String symb = Terrain.terrain_sym.get(type);
 
         if (type_terrain.equals("terrain")) {
+            //System.out.println("terrain update : " + Integer.parseInt(type));
             map[x][y].setValue(Integer.parseInt(type));
         } else {
             map[x][y].setValue(-1);
