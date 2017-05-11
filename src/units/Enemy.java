@@ -84,7 +84,7 @@ public class Enemy {
 
     public void updatePlan(ArrayList<Tuple<Integer, Integer>> list, Tuple<Integer, Integer> playerPosition) {
         if(playerPosition.x !=-1 && playerPosition.y != -1){
-
+            Tuple<Integer,Integer> pos = new Tuple<Integer,Integer>(this.posX, this.posY);
             this.state = AgentState.Rush;
         } else {
             this.state = AgentState.Search;

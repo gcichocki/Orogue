@@ -107,11 +107,18 @@ public class Tile {
         this.hide = hide;
     }
 
-    public Boolean isNeighbours(Tile t){
-        boolean b = false;
-        
+    public boolean isNeighbours(Tuple<Integer,Integer> unit, Tuple<Integer,Integer> player){
 
-        return b;
+        if(unit.x == player.x-1 && unit.y == player.y)
+            return true;
+        if(unit.x == player.x+1 && unit.y == player.y)
+            return true;
+        if(unit.x == player.x && unit.y == player.y-1)
+            return true;
+        if(unit.x == player.x && unit.y == player.y+1)
+            return true;
+
+        return false;
     }
 }
 
