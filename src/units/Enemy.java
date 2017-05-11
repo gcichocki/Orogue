@@ -135,8 +135,12 @@ public class Enemy {
         /*Tile obj = path.getPath().get(path.getPath().size()-1);
         if(obj.getValue() != this.master.getMap().getTile(obj.getPosX(), obj.getPosY()).getValue()){*/
             mapController.updateProbasToZero(list);
-            Proba p = this.mapController.pickDirection();
-            System.out.println("Proba : " + p.toString());
+            Proba p;
+            do{
+                 p = this.mapController.pickDirection();
+                System.out.println("Proba : " + p.toString());
+            }while(this.master.getMap().getTile(p.getX(), p.getY()).isObstacle());
+
             Astar aetoile = new Astar(
                     this.master.getMap(),
                     this.master.getMap().getTile(this.getPosX(), this.getPosY()),
