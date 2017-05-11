@@ -137,9 +137,9 @@ public class DicoProba {
             int randind = r.nextInt(listRandom.size());
             System.out.println("random index " + randind);
             System.out.println("Print list " + listRandom.size());
-            for (Proba p: listRandom) {
+            /*for (Proba p: listRandom) {
                 System.out.println("P : " + p);
-            }
+            }*/
             return listRandom.get(randind);
         }
 

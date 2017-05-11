@@ -15,15 +15,16 @@ public class ListenSocket extends Thread {
     }
 
     public void run() {
-        int cpt = 0;
+        //int cpt = 0;
         while(true) {
             try {
                 String tmp = reader.readLine();
-                cpt++;
+                //cpt++;
                 buffer.put(tmp);
                 //buffer.notify();
             } catch (Exception e) {
                 e.printStackTrace();
+                System.exit(0);
             }
         }
     }

@@ -107,18 +107,20 @@ public class Tile {
         this.hide = hide;
     }
 
-    public boolean isNeighbours(Tuple<Integer,Integer> unit, Tuple<Integer,Integer> player){
 
-        if(unit.x == player.x-1 && unit.y == player.y)
+    public boolean isNeighbours(Tuple<Integer,Integer> player){
+
+        if(this.posX == player.x-1 && this.posY == player.y)
             return true;
-        if(unit.x == player.x+1 && unit.y == player.y)
+        if(this.posX == player.x+1 && this.posY == player.y)
             return true;
-        if(unit.x == player.x && unit.y == player.y-1)
+        if(this.posX == player.x-1 && this.posY == player.y-1)
             return true;
-        if(unit.x == player.x && unit.y == player.y+1)
+        if(this.posX == player.x-1 && this.posY == player.y+1)
             return true;
 
         return false;
+
     }
 }
 

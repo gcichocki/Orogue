@@ -23,6 +23,8 @@ public class Adapter extends Thread {
     // pos enemy, if seen by the last unit else set to -1 -1
     private Tuple<Integer, Integer> posEnemy;
 
+    private int last_id_unit = 0;
+
     //parameters width=xx height=yy
 
     private void initSocket() {
@@ -64,22 +66,22 @@ public class Adapter extends Thread {
 
                 if(tab_line[3].equals("ally") ) {
                     // c'est un ally on met a jour ca map de case vue
-                    int id = Integer.parseInt(tab_line[4].split("=")[1]);
+                    last_id_unit = Integer.parseInt(tab_line[4].split("=")[1]);
                     int hp = Integer.parseInt(tab_line[5].split("=")[1]);
                     char symbole = tab_line[6].split("=")[1].charAt(0);
-                    master.updateEntity(id, hp, x, y,symbole);
+                    master.updateEntity(last_id_unit, hp, x, y,symbole);
                     // on met a jour les cases de cette unit
-                    master.setNewTilesUnit(id, tmpNewTiles);
-                    master.setPosEnemyByUnit(id, posEnemy);
-                    // on reset les cases découverte
-                    tmpNewTiles = new ArrayList<>();
-                    posEnemy = new Tuple<>(-1, -1);
+                    master.setNewTilesUnit(last_id_unit, tmpNewTiles);
+                    master.setPosEnemyByUnit(last_id_unit, posEnemy);
+
                 } else if (tab_line[3].equals("ennemy")) {
                     // c'est la pos de l'ennemy vue par cette unit
                     posEnemy = new Tuple<>(x,y);
+                    master.setPosEnemyByUnit(last_id_unit, posEnemy);
                 } else {
                     // sinon c'est un terrain decouvert par l'unit
                     tmpNewTiles.add(new Tuple<>(x, y));
+                    master.setNewTilesUnit(last_id_unit, tmpNewTiles);
                 }
                 break;
             case "action?":
@@ -90,6 +92,10 @@ public class Adapter extends Thread {
                 } else {
                     Controller.getInstance().getMapGUI().setFocus(x, y);
                     int id = Integer.parseInt(tab_line[3].split("=")[1]);
+                    // on reset les cases découverte
+                    tmpNewTiles = new ArrayList<>();
+                    posEnemy = new Tuple<>(-1, -1);
+
                     System.out.println("Play unit " + id);
                     sendIAAction(master.playUnit(id), new Tuple<>(x, y));
                 }
@@ -135,12 +141,12 @@ public class Adapter extends Thread {
             action = "south\n";
         } else if (move.x - posIA.x == -1) {
             // east
-            System.out.println("east");
-            action = "east\n";
-        } else if (move.x - posIA.x == 1) {
-            // west
             System.out.println("west");
             action = "west\n";
+        } else if (move.x - posIA.x == 1) {
+            // west
+            System.out.println("east");
+            action = "east\n";
         }
         else {
             System.out.println("Ne fait rien");
