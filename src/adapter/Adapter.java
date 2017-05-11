@@ -2,9 +2,11 @@ package adapter;
 
 import map.Map;
 import map.Tuple;
+import units.Action;
 import units.Master;
 
 import java.io.*;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -126,31 +128,57 @@ public class Adapter extends Thread {
         }
     }
 
-    public void sendIAAction(Tuple<Integer, Integer> move, Tuple<Integer, Integer> posIA) {
+    public void sendIAAction(Action actionIA, Tuple<Integer, Integer> posIA) {
+
+        Tuple<Integer, Integer> move = new Tuple<>(actionIA.getX(), actionIA.getY());
         String action = "";
         System.out.println("Pos IA " + posIA.toString());
         System.out.println("Move IA " + move.toString());
+        
+        if (actionIA.getAction() == Action.ActionType.Move) {
+            if (move.y - posIA.y == -1) {
+                // north
+                System.out.println("north");
+                action = "north\n";
+            } else if (move.y - posIA.y == 1) {
+                // south
+                System.out.println("south");
+                action = "south\n";
+            } else if (move.x - posIA.x == -1) {
+                // east
+                System.out.println("west");
+                action = "west\n";
+            } else if (move.x - posIA.x == 1) {
+                // west
+                System.out.println("east");
+                action = "east\n";
+            }
+            else {
+                System.out.println("Ne fait rien");
+            }
+        } else if (actionIA.getAction() == Action.ActionType.Attack) {
+            if (move.y - posIA.y == -1) {
+                // north
+                System.out.println("Attack UP");
+                action = "attack 0 -1\n";
+            } else if (move.y - posIA.y == 1) {
+                // south
+                System.out.println("Attack DOWN");
+                action = "attack 0 1\n";
+            } else if (move.x - posIA.x == -1) {
+                // east
+                System.out.println("Attack LEFT");
+                action = "attack -1 0\n";
+            } else if (move.x - posIA.x == 1) {
+                // west
+                System.out.println("Attack RIGHT");
+                action = "attack 1 0\n";
+            }
+            else {
+                System.out.println("Ne fait rien");
+            }
+        }
 
-        if (move.y - posIA.y == -1) {
-            // north
-            System.out.println("north");
-            action = "north\n";
-        } else if (move.y - posIA.y == 1) {
-            // south
-            System.out.println("south");
-            action = "south\n";
-        } else if (move.x - posIA.x == -1) {
-            // east
-            System.out.println("west");
-            action = "west\n";
-        } else if (move.x - posIA.x == 1) {
-            // west
-            System.out.println("east");
-            action = "east\n";
-        }
-        else {
-            System.out.println("Ne fait rien");
-        }
 
         try {
             if(action != "") {
