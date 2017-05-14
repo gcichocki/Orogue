@@ -77,21 +77,18 @@ public class Adapter extends Thread {
                     // on met a jour les cases de cette unit
                     //master.setNewTilesUnit(last_id_unit, tmpNewTiles);
                     //master.setPosEnemyByUnit(last_id_unit, posEnemy);
-
                 } else if (tab_line[3].equals("ennemy")) {
                     // sur une condition, quand les joueurs on finit de jouer il faudrait récupérer le dernier
                     // move du joueur qui est envoyé après
-                    /*if (nb_action == 0) {
-                        // le joueur viens de bouger on met a jour uniquement les IA qui l'avaient vu
+                    // on met à jour seulement les IA qui peuvent le voir bouger
+                    if(Controller.getInstance().isIA()) {
                         for (int i = 1; i <= master.getNbIA(); i++) {
-                            if (master.IAHasSeenEnemy(i)) {
+                            if (master.IACanSeeEnemy(i, new Tuple<>(x, y))) {
+                                System.out.println("[DEBUG] On met à jour la position de l'unité " + i + " (" + x + ", " + y + ")");
                                 master.setPosEnemyByUnit(i, new Tuple<>(x, y));
                             }
                         }
-                    } else {*/
-                        // c'est la pos de l'ennemy vue par cette unit
-                        master.setPosEnemyByUnit(last_id_unit, new Tuple<>(x,y));
-                    //}
+                    }
                 } else {
                     // sinon c'est un terrain decouvert par l'unit
                     //tmpNewTiles.add(new Tuple<>(x, y));
@@ -281,7 +278,7 @@ public class Adapter extends Thread {
         //int cpt = 0;
         while(true) {
             line = ls.getLastLine();
-            System.out.println(line);
+            //System.out.println(line);
             processLine(line);
             //cpt++;
             //System.out.println(cpt);

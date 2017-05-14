@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Master {
-    public boolean IAHasSeenEnemy(int id) {
-        return posEnemyByUnit.get(id) != null && (posEnemyByUnit.get(id).x != -1 && posEnemyByUnit.get(id).y != -1);
+    public boolean IACanSeeEnemy(int id, Tuple<Integer, Integer> player_pos) {
+        // On compare les distances au carré pour économiser l'opération de racine carrée (rayon fov = 8)
+        // Si jamais l'ennemi est dans le cercle mais caché par un obstacle le serveur ne renvoie pas de ligne "ennemy"
+        // et donc cette fonction n'est pas exécutée, inutile donc de tester les obstacles ici
+        return Math.pow((listUnits.get(id).getPosX() - player_pos.x), 2.0) + Math.pow((player_pos.y - listUnits.get(id).getPosY()), 2.0) <= 64.0d;
     }
 
     public enum MasterState {
