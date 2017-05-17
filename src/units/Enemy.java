@@ -148,24 +148,6 @@ public class Enemy {
      * the unit go in its direction
      */
     public Action search(ArrayList<Tuple<Integer, Integer>> list){
-
-<<<<<<< HEAD
-        if(path.isEmpty() || path.getPath().get(0).isObstacle()){
-            mapController.updateProbasToZero(list);
-            Proba p;
-            do{
-                p = this.mapController.pickDirection();
-                System.out.println("Proba : " + p.toString());
-            }while(this.master.getMap().getTile(p.getX(), p.getY()).isObstacle() || (p.getX()==this.getPosX() && p.getY()==this.posY));
-
-            Astar aetoile = new Astar(
-                    this.master.getMap(),
-                    this.master.getMap().getTile(this.getPosX(), this.getPosY()),
-                    this.master.getMap().getTile(p.getX(), p.getY()));
-            path = aetoile.runAstar();
-            path.pop();
-        }
-=======
             if(path.isEmpty() || path.getPath().get(0).isObstacle()){
                 mapController.updateProbasToZero(list);
                 Proba p;
@@ -185,11 +167,6 @@ public class Enemy {
 
             Tile dest = path.pop();
             return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
->>>>>>> 7068c2f42c47e4e97517f0bf7572d1f10ee35e11
-
-
-        Tile dest = path.pop();
-        return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
     }
 
 
