@@ -91,6 +91,8 @@ public class Adapter extends Thread {
                             if (master.IACanSeeEnemy(key, new Tuple<>(x, y))) {
                                 System.out.println("[DEBUG] On met à jour la position de l'unité " + key + " (" + x + ", " + y + ")");
                                 master.setPosEnemyByUnit(key, new Tuple<>(x, y));
+                            } else {
+                                master.setPosEnemyByUnit(key, new Tuple<>(-1, -1));
                             }
                         }
 

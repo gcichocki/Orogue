@@ -21,27 +21,26 @@ public class Master {
 
     public void Communicate(int id_unit) {
         Enemy unit = listUnits.get(id_unit);
+        if (unit.getTimelapse() >= 5) {
+            for(java.util.Map.Entry<Integer, Enemy> entry : this.getListUnits().entrySet()) {
+                Integer other_id = entry.getKey();
+                Enemy other_unit = entry.getValue();
 
-        for(java.util.Map.Entry<Integer, Enemy> entry : this.getListUnits().entrySet()) {
-            Integer other_id = entry.getKey();
-            Enemy other_unit = entry.getValue();
-
-            if (this.IACanSeeEnemy(id_unit, new Tuple<>(other_unit.getPosX(), other_unit.getPosY()))) {
-                // si l'IA peut voir l'autre IA
-                if (unit.getTimelapse() > other_unit.getTimelapse()) {
-                    // >
-                    other_unit.getDicoProba();
-                } else if(unit.getTimelapse() < other_unit.getTimelapse()) {
-                    // <
-                    unit.getDicoProba();
-                } else {
-                    // ==
-                    // NE FAIT RIEN
+                if (this.IACanSeeEnemy(id_unit, new Tuple<>(other_unit.getPosX(), other_unit.getPosY()))) {
+                    // si l'IA peut voir l'autre IA
+                    if (unit.getTimelapse() > other_unit.getTimelapse()) {
+                        // >
+                        unit.getMapController().receiveDico(other_unit.getDicoProba());
+                    } else if(unit.getTimelapse() < other_unit.getTimelapse()) {
+                        // <
+                        other_unit.getMapController().receiveDico(unit.getDicoProba());
+                    } else {
+                        // ==
+                        // NE FAIT RIEN
+                    }
                 }
             }
         }
-
-
     }
 
     public enum MasterState {
