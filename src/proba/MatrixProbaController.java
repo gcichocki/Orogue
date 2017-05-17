@@ -33,8 +33,7 @@ public class MatrixProbaController {
         this.matrix.resetMapProba();
         this.matrix.setProba(x, y, (byte)9);
         this.matrix.smoothMapProba();
-        //this.matrix.printMatrix();
-        //this.matrix.printDico();
+        //this.printAll();
     }
 
     public void updateProba(){

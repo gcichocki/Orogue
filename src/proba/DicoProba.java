@@ -83,7 +83,6 @@ public class DicoProba {
         if (size != 0) {
             Random r = new Random();
             int randind = r.nextInt(size);
-            //System.out.println();
             return this.dico.get(index).get(randind);
         }
         System.out.println("*** DICOPROBAS : No element in the list " + index + " ***");
