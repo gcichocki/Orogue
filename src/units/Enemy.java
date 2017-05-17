@@ -49,6 +49,14 @@ public class Enemy {
         return mapController.getDicoProba();
     }
 
+    public MatrixProbaController getMapController() {
+        return mapController;
+    }
+
+    public void setTimelapse(int timelapse) {
+        mapController.setTimelapse(timelapse);
+    }
+
     public int getHp() {
         return hp;
     }
