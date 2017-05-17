@@ -131,8 +131,8 @@ public class Adapter extends Thread {
             // we update the map
             master.updateMap(x, y, type_terrain, buf[1]);
         } else {
-            // the type , number of the type : mountain, water, ...
-            String[] buf = tab_line[4].split("=");
+            // the type , number of the type : mountain, water, food ...
+            String[] buf = (tab_line[3].equals("food") ? tab_line[5].split("=") : tab_line[4].split("="));
 
             // we update the map
             master.updateMap(x, y, type_terrain, buf[1]);
@@ -281,7 +281,7 @@ public class Adapter extends Thread {
         //int cpt = 0;
         while(true) {
             line = ls.getLastLine();
-            //System.out.println(line);
+            System.out.println(line);
             processLine(line);
             //cpt++;
             //System.out.println(cpt);
