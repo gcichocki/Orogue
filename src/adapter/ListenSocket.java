@@ -19,9 +19,7 @@ public class ListenSocket extends Thread {
         while(true) {
             try {
                 String tmp = reader.readLine();
-                //cpt++;
                 buffer.put(tmp);
-                //buffer.notify();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(0);

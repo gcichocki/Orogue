@@ -60,7 +60,7 @@ public class Adapter extends Thread {
         switch (tab_line[0]) {
             case "parameters":
                 // x-> height, y -> width
-                System.out.println("width " + x + " height " + y);
+                System.out.println("[DEBUG] width " + x + " height " + y);
                 master.setMap(new Map(y, x));
                 Controller.getInstance().initGUI(y, x);
                 break;
@@ -74,9 +74,6 @@ public class Adapter extends Thread {
                     int hp = Integer.parseInt(tab_line[5].split("=")[1]);
                     char symbole = tab_line[6].split("=")[1].charAt(0);
                     master.updateEntity(last_id_unit, hp, x, y,symbole);
-                    // on met a jour les cases de cette unit
-                    //master.setNewTilesUnit(last_id_unit, tmpNewTiles);
-                    //master.setPosEnemyByUnit(last_id_unit, posEnemy);
                 } else if (tab_line[3].equals("ennemy")) {
                     // sur une condition, quand les joueurs on finit de jouer il faudrait récupérer le dernier
                     // move du joueur qui est envoyé après
@@ -91,7 +88,6 @@ public class Adapter extends Thread {
                     }
                 } else {
                     // sinon c'est un terrain decouvert par l'unit
-                    //tmpNewTiles.add(new Tuple<>(x, y));
                     master.addNewTilesByUnit(last_id_unit, new Tuple<>(x, y));
                 }
                 break;
@@ -103,14 +99,7 @@ public class Adapter extends Thread {
                 } else {
                     Controller.getInstance().getMapGUI().setFocus(x, y);
                     int id = Integer.parseInt(tab_line[3].split("=")[1]);
-
-                    //System.out.println("Play unit " + id);
                     sendIAAction(master.playUnit(id), new Tuple<>(x, y));
-                    //nb_action++;
-
-                    /*if (nb_action == master.getNbIA()) {
-                        nb_action = 0;
-                    }*/
                 }
 
                 // we need to see for which unit we need to move and stuff
@@ -127,12 +116,11 @@ public class Adapter extends Thread {
 
         if (tab_line[3].equals("ally") || tab_line[3].equals("ennemy")) {
             String[] buf = tab_line[6].split("=");
-
             // we update the map
             master.updateMap(x, y, type_terrain, buf[1]);
         } else {
-            // the type , number of the type : mountain, water, ...
-            String[] buf = tab_line[4].split("=");
+            // the type , number of the type : mountain, water, food ...
+            String[] buf = (tab_line[3].equals("food") ? tab_line[5].split("=") : tab_line[4].split("="));
 
             // we update the map
             master.updateMap(x, y, type_terrain, buf[1]);
@@ -143,53 +131,54 @@ public class Adapter extends Thread {
 
         Tuple<Integer, Integer> move = new Tuple<>(actionIA.getX(), actionIA.getY());
         String action = "";
+
         master.updateMapOccupied(posIA.x, posIA.y, false);
         master.updateMapOccupied(move.x, move.y, true);
 
-        //System.out.println("Pos IA " + posIA.toString());
-        //System.out.println("Move IA " + move.toString());
+        System.out.println("[Pos_IA]" + posIA.toString());
+        System.out.println("[Move IA]" + move.toString());
 
         if (actionIA.getAction() == Action.ActionType.Move) {
             if (move.y - posIA.y == -1) {
                 // north
-                System.out.println("north");
+                System.out.println("[Move]north");
                 action = "north\n";
             } else if (move.y - posIA.y == 1) {
                 // south
-                System.out.println("south");
+                System.out.println("[Move]south");
                 action = "south\n";
             } else if (move.x - posIA.x == -1) {
                 // east
-                System.out.println("west");
+                System.out.println("[Move]west");
                 action = "west\n";
             } else if (move.x - posIA.x == 1) {
                 // west
-                System.out.println("east");
+                System.out.println("[Move]east");
                 action = "east\n";
             }
             else {
-                System.out.println("Ne fait rien");
+                System.out.println("[Move]Ne fait rien");
             }
         } else if (actionIA.getAction() == Action.ActionType.Attack) {
             if (move.y - posIA.y == -1) {
                 // north
-                System.out.println("Attack UP");
+                System.out.println("[Move]Attack UP");
                 action = "attack 0 -1\n";
             } else if (move.y - posIA.y == 1) {
                 // south
-                System.out.println("Attack DOWN");
+                System.out.println("[Move]Attack DOWN");
                 action = "attack 0 1\n";
             } else if (move.x - posIA.x == -1) {
                 // east
-                System.out.println("Attack LEFT");
+                System.out.println("[Move]Attack LEFT");
                 action = "attack -1 0\n";
             } else if (move.x - posIA.x == 1) {
                 // west
-                System.out.println("Attack RIGHT");
+                System.out.println("[Move]Attack RIGHT");
                 action = "attack 1 0\n";
             }
             else {
-                System.out.println("Ne fait rien");
+                System.out.println("[Move]Ne fait rien");
             }
         }
 
@@ -198,7 +187,6 @@ public class Adapter extends Thread {
             if(action != "") {
                 writer.write(action);
                 writer.flush();
-                //Controller.getInstance().setStatus(Controller.Status.WAIT);
                 Controller.getInstance().getMapGUI().setFocus(-1, -1);
             }
 
@@ -208,7 +196,7 @@ public class Adapter extends Thread {
     }
 
     public void sendAction(String key) {
-        System.out.println("Key entered : " + key);
+        System.out.println("[Move] Key entered : " + key);
         String msg = "";
         switch (key) {
             case "Z":
@@ -249,19 +237,15 @@ public class Adapter extends Thread {
                 writer.write(msg);
                 writer.flush();
                 Controller.getInstance().setStatus(Controller.Status.WAIT);
-                System.out.println(msg);
+                System.out.println("[Move] " + msg);
                 Controller.getInstance().getMapGUI().setFocus(-1, -1);
             } else {
-                System.out.println("Error of input or not the right time to move...");
+                System.out.println("[Move] Error of input or not the right time to move...");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-   /* private void updateAction() {
-
-    }*/
 
     public Adapter(int port, Master master) {
         this.port = port;
@@ -269,22 +253,18 @@ public class Adapter extends Thread {
         this.tmpNewTiles = new ArrayList<>();
         this.posEnemy = new Tuple<>(-1,-1);
         initSocket();
-        System.out.println("Création de la socket de lecture");
+        System.out.println("[DEBUG] Création de la socket de lecture");
         ls = new ListenSocket(reader);
-        System.out.println("Socket de lecture crée");
+        System.out.println("[DEBUG] Socket de lecture crée");
         this.start();
-        System.out.println("Thread de récupération de ligne lancé");
+        System.out.println("[DEBUG] Thread de récupération de ligne lancé");
     }
 
     public void run() {
         String line;
-        //int cpt = 0;
         while(true) {
             line = ls.getLastLine();
-            //System.out.println(line);
             processLine(line);
-            //cpt++;
-            //System.out.println(cpt);
         }
     }
 }
