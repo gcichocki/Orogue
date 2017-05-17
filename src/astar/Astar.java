@@ -118,7 +118,6 @@ public class Astar {
             path.add(aux);
             aux = cameFrom[aux.getPosX()][aux.getPosY()];
         }
-        path.add(aux);
         return path;
     }
 
