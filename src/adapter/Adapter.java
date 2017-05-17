@@ -264,10 +264,6 @@ public class Adapter extends Thread {
         String line;
         while(true) {
             line = ls.getLastLine();
-<<<<<<< HEAD
-=======
-            System.out.println(line);
->>>>>>> 64b7c10ccd21522d54cc5bd8bdbedd5b76712c07
             processLine(line);
         }
     }
