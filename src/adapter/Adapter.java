@@ -265,6 +265,7 @@ public class Adapter extends Thread {
         while(true) {
             line = ls.getLastLine();
             processLine(line);
+            System.out.println("[alata_line]" + line);
         }
     }
 }
