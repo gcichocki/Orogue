@@ -50,12 +50,11 @@ public class MatrixProbaController {
 
     /**
      * unit reaction upon receiving new data from another unit
-     * @param listProba
+     * @param dico
      */
     //TODO VERIFIER AVEC LE TIMELAPSE CE QU'IL FAUT FAIRE
-    public void blendProba(ArrayList<Proba> listProba){
-        this.matrix.setListMaxProba(listProba);
-        this.matrix.smoothMapProba();
+    public void receiveDico(DicoProba dico){
+        matrix.setDicoProba(dico);
     }
 
     public void updateProbasToZero(ArrayList<Tuple<Integer, Integer>> listProba){

@@ -20,6 +20,10 @@ public class DicoProba {
         }
     }
 
+    public ArrayList<Proba> getList(int index){
+        return dico.get(index);
+    }
+
     /**
      * add a Probas to the ArrayList of the chosen proba value
      * @param index

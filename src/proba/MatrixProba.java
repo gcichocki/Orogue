@@ -35,6 +35,11 @@ public class MatrixProba {
         resetMapProba();
     }
 
+    public void setDicoProba(DicoProba dicoProba) {
+        this.dicoProba = dicoProba;
+        updateMapFromDico();
+    }
+
     public int getSizeX() { return sizeX; }
 
     public int getSizeY() { return sizeY; }
@@ -204,6 +209,17 @@ public class MatrixProba {
             dicoProba.add(getProba((int) t.x, (int) t.y));
         }
     }
+
+    private void updateMapFromDico(){
+
+        for(int i=0;i<=9;i++){
+            for (Proba p:dicoProba.getList(i)) {
+                mapProba[p.getX()][p.getY()].setValue((byte)i);
+            }
+        }
+
+    }
+
 
     /**
      * prints a matrix with its side
