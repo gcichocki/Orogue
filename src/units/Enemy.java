@@ -125,7 +125,6 @@ public class Enemy {
                 this.master.getMap().getTile(this.getPosX(), this.getPosY()),
                 this.master.getMap().getTile(playerPosition.x, playerPosition.y));
         path = aetoile.runAstar();
-        path.pop();
 
         Tile dest = path.pop();
         return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
@@ -160,7 +159,6 @@ public class Enemy {
                         this.master.getMap().getTile(this.getPosX(), this.getPosY()),
                         this.master.getMap().getTile(p.getX(), p.getY()));
                 path = aetoile.runAstar();
-                path.pop();
             }
 
 
