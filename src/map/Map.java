@@ -86,6 +86,10 @@ public class Map {
         }
     }
 
+    public void updateTileOccupied(int x, int y, boolean value) {
+        map[x][y].setOccupied(value);
+    }
+
     public void hide(int x, int y) {
         map[x][y].setHide(true);
         // we notify the map to be updated

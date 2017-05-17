@@ -28,6 +28,17 @@ public class Tile {
     private boolean hide = false;
 
     private int value;
+
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        isOccupied = occupied;
+    }
+
+    private boolean isOccupied = false;
+
     /**
      * Constructor of a tile, with color and pos
      * @param ascii
@@ -95,7 +106,7 @@ public class Tile {
      */
 
     public boolean isObstacle(){
-        return value == 0 || value == 6;
+        return value == 0 || value == 6 || isOccupied;
     }
 
 
