@@ -82,7 +82,6 @@ public class Enemy {
         if(playerPosition.x !=-1 && playerPosition.y != -1){
             Tile pos = new Tile(this.posX, this.posY);
             if (pos.isNeighbours(playerPosition)){
-                //System.out.println("Neighbour");
                 this.state = AgentState.Attack;
             }
             else {
@@ -149,27 +148,26 @@ public class Enemy {
      */
     public Action search(ArrayList<Tuple<Integer, Integer>> list){
 
-            if(path.isEmpty() || path.getPath().get(0).isObstacle()){
-                mapController.updateProbasToZero(list);
-                Proba p;
-                do{
-                    p = this.mapController.pickDirection();
-                    System.out.println("Proba : " + p.toString());
-                }while(this.master.getMap().getTile(p.getX(), p.getY()).isObstacle() || (p.getX()==this.getPosX() && p.getY()==this.posY));
+        if(path.isEmpty() || path.getPath().get(0).isObstacle()){
+            mapController.updateProbasToZero(list);
+            Proba p;
+            do{
+                p = this.mapController.pickDirection();
+                System.out.println("Proba : " + p.toString());
+            }while(this.master.getMap().getTile(p.getX(), p.getY()).isObstacle() || (p.getX()==this.getPosX() && p.getY()==this.posY));
 
-                Astar aetoile = new Astar(
-                        this.master.getMap(),
-                        this.master.getMap().getTile(this.getPosX(), this.getPosY()),
-                        this.master.getMap().getTile(p.getX(), p.getY()));
-                path = aetoile.runAstar();
-                path.pop();
-            }
-
-
-            Tile dest = path.pop();
-            return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
+            Astar aetoile = new Astar(
+                    this.master.getMap(),
+                    this.master.getMap().getTile(this.getPosX(), this.getPosY()),
+                    this.master.getMap().getTile(p.getX(), p.getY()));
+            path = aetoile.runAstar();
+            path.pop();
+        }
 
 
+        Tile dest = path.pop();
+        return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
     }
+
 
 }
