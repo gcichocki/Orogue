@@ -91,7 +91,7 @@ public class MapGui extends JFrame {
             focus = false;
             defaultTableModel.fireTableCellUpdated(selectedX, selectedY);
         } else {
-            System.out.println("Cell to play with x "+ x + " y " + y);
+            //System.out.println("Cell to play with x "+ x + " y " + y);
             if (focus) {
                 int oldX = selectedX;
                 int oldY = selectedY;
@@ -136,7 +136,7 @@ public class MapGui extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println("key : "  + KeyEvent.getKeyText(e.getKeyCode()));
+            //System.out.println("key : "  + KeyEvent.getKeyText(e.getKeyCode()));
             Controller.getInstance().getAdapter().sendAction(KeyEvent.getKeyText(e.getKeyCode()));
         }
 

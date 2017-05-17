@@ -114,7 +114,7 @@ public class Enemy {
                 toDo = search(list);
                 break;
         }
-        System.out.println("path : " + path.getPath().toString());
+        System.out.println("[Path]" + path.getPath().toString());
         return toDo;
     }
 
@@ -154,7 +154,7 @@ public class Enemy {
                 Proba p;
                 do{
                     p = this.mapController.pickDirection();
-                    System.out.println("Proba : " + p.toString());
+                    System.out.println("[Proba]" + p.toString());
                 }while(this.master.getMap().getTile(p.getX(), p.getY()).isObstacle() || (p.getX()==this.getPosX() && p.getY()==this.posY));
 
                 Astar aetoile = new Astar(

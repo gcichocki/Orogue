@@ -29,10 +29,6 @@ public class Tile {
 
     private int value;
 
-    public boolean isOccupied() {
-        return isOccupied;
-    }
-
     public void setOccupied(boolean occupied) {
         isOccupied = occupied;
     }
