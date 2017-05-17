@@ -20,6 +20,10 @@ public class Path {
         return path;
     }
 
+    public boolean isEmpty(){
+        return path.isEmpty();
+    }
+
     public void add(Tile t){
         this.path.add(0,t);
     }

@@ -96,32 +96,8 @@ public class DicoProba {
         */
     }
 
+
     public Proba pickRandomProba(int lowBound){
-        ArrayList<Proba> listRandom = new ArrayList<>();
-
-        for (int i=lowBound; i<10; i++) {
-            Proba p = randomPick(i);
-
-            if (p != null) {
-                listRandom.add(p);
-            }
-        }
-        if (!listRandom.isEmpty()){
-            Random r = new Random();
-            int randind = r.nextInt(listRandom.size());
-            System.out.println("random index " + randind);
-            System.out.println("Print list " + listRandom.size());
-            for (Proba p: listRandom) {
-                System.out.println("P : " + p);
-            }
-            return listRandom.get(randind);
-        }
-
-        System.out.println("***DICOPROBAS : NO PROBA PICK IN RANDOM ***");
-        return null;
-    }
-
-    public Proba pickRandomProbaReal(int lowBound){
         ArrayList<Proba> listRandom = new ArrayList<>();
 
         for (int i=lowBound; i<10; i++) {
@@ -135,7 +111,7 @@ public class DicoProba {
         if (!listRandom.isEmpty()){
             Random r = new Random();
             int randind = r.nextInt(listRandom.size());
-            System.out.println("random index " + randind);
+           /* System.out.println("random index " + randind);
             System.out.println("Print list " + listRandom.size());
             /*for (Proba p: listRandom) {
                 System.out.println("P : " + p);
