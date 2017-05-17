@@ -116,7 +116,7 @@ public class Adapter extends Thread {
                 } else {
                     Controller.getInstance().getMapGUI().setFocus(x, y);
                     int id = Integer.parseInt(tab_line[3].split("=")[1]);
-                    sendIAAction(master.playUnit(id), new Tuple<>(x, y));
+                    sendIAAction(master.playUnit(id), new Tuple<>(x, y), id);
                 }
 
                 // we need to see for which unit we need to move and stuff
@@ -144,7 +144,7 @@ public class Adapter extends Thread {
         }
     }
 
-    public void sendIAAction(Action actionIA, Tuple<Integer, Integer> posIA) {
+    public void sendIAAction(Action actionIA, Tuple<Integer, Integer> posIA, int id) {
 
         Tuple<Integer, Integer> move = new Tuple<>(actionIA.getX(), actionIA.getY());
         String action = "";
@@ -177,6 +177,10 @@ public class Adapter extends Thread {
             else {
                 Log.move("Ne fait rien");
             }
+
+            // when the IA MOVED
+            master.Communicate(id);
+
         } else if (actionIA.getAction() == Action.ActionType.Attack) {
             if (move.y - posIA.y == -1) {
                 // north

@@ -19,6 +19,31 @@ public class Master {
         return Math.pow((listUnits.get(id).getPosX() - player_pos.x), 2.0) + Math.pow((player_pos.y - listUnits.get(id).getPosY()), 2.0) <= 64.0d;
     }
 
+    public void Communicate(int id_unit) {
+        Enemy unit = listUnits.get(id_unit);
+
+        for(java.util.Map.Entry<Integer, Enemy> entry : this.getListUnits().entrySet()) {
+            Integer other_id = entry.getKey();
+            Enemy other_unit = entry.getValue();
+
+            if (this.IACanSeeEnemy(id_unit, new Tuple<>(other_unit.getPosX(), other_unit.getPosY()))) {
+                // si l'IA peut voir l'autre IA
+                if (unit.getTimelapse() > other_unit.getTimelapse()) {
+                    // >
+
+                } else if(unit.getTimelapse() < other_id.getTimelapse()) {
+                    // <
+                    
+                } else {
+                    // ==
+
+                }
+            }
+        }
+
+
+    }
+
     public enum MasterState {
         Idle,
         On
@@ -58,8 +83,6 @@ public class Master {
 
         return listUnits.get(id).action(tmpNewTilesByUnit.get(id), posEnemyByUnit.get(id));
     }
-
-
 
     public Master() {
         this.listUnits = new HashMap<>();
