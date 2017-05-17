@@ -106,7 +106,7 @@ public class Tile {
      */
 
     public boolean isObstacle(){
-        return value == 0 || value == 6;
+        return value == 0 || value == 6 || isOccupied;
     }
 
 
