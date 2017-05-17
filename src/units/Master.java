@@ -75,6 +75,9 @@ public class Master {
         map.updateTile(x, y, type_unit, type);
     }
 
+    public void updateMapOccupied(int x, int y, boolean value) {
+        map.updateTileOccupied(x, y, value);
+    }
     public void updateEntity(int unitId, int hp, int posX, int posY, char symbole) {
         if(listUnits.containsKey(unitId))
         {

@@ -143,6 +143,9 @@ public class Adapter extends Thread {
 
         Tuple<Integer, Integer> move = new Tuple<>(actionIA.getX(), actionIA.getY());
         String action = "";
+        master.updateMapOccupied(posIA.x, posIA.y, false);
+        master.updateMapOccupied(move.x, move.y, false);
+
         //System.out.println("Pos IA " + posIA.toString());
         //System.out.println("Move IA " + move.toString());
 
