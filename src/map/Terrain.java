@@ -18,6 +18,7 @@ public class Terrain {
         terrain_sym.put("7", "+");
         terrain_sym.put("h", "\uD83D\uDE08");
         terrain_sym.put("@", "@");
+        terrain_sym.put("f", "\uD83C\uDF55");
     }
 
     public static HashMap<String, String> terrain_color;
@@ -34,6 +35,7 @@ public class Terrain {
         terrain_color.put("7", "cyan");
         terrain_color.put("h", "yellow");
         terrain_color.put("@", "blue");
+        terrain_color.put("f", "yellow");
     }
 
 }
