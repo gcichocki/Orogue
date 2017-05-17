@@ -40,6 +40,10 @@ public class Enemy {
         this.mapController = new MatrixProbaController(this.master.getMap().getRows(),this.master.getMap().getCols());
     }
 
+    public int getTimelapse() {
+        return mapController.getTimelapse();
+    }
+
     public int getHp() {
         return hp;
     }

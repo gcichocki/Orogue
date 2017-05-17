@@ -36,6 +36,10 @@ public class MatrixProbaController {
         //this.printAll();
     }
 
+    public int getTimelapse() {
+        return timelapse;
+    }
+
     public void updateProba(){
         timelapse++;
     }
