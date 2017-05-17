@@ -113,7 +113,6 @@ public class Enemy {
                 toDo = search(list);
                 break;
         }
-        System.out.println("path : " + path.getPath().toString());
         System.out.println("[Path]" + path.getPath().toString());
         return toDo;
     }
