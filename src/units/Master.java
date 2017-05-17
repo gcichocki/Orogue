@@ -30,13 +30,13 @@ public class Master {
                 // si l'IA peut voir l'autre IA
                 if (unit.getTimelapse() > other_unit.getTimelapse()) {
                     // >
-
-                } else if(unit.getTimelapse() < other_id.getTimelapse()) {
+                    other_unit.getDicoProba();
+                } else if(unit.getTimelapse() < other_unit.getTimelapse()) {
                     // <
-                    
+                    unit.getDicoProba();
                 } else {
                     // ==
-
+                    // NE FAIT RIEN
                 }
             }
         }
