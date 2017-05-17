@@ -3,6 +3,7 @@ package adapter;
 import map.Map;
 import map.Tuple;
 import units.Action;
+import units.Enemy;
 import units.Master;
 
 import java.io.*;
@@ -10,6 +11,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Adapter extends Thread {
 
@@ -74,17 +76,30 @@ public class Adapter extends Thread {
                     int hp = Integer.parseInt(tab_line[5].split("=")[1]);
                     char symbole = tab_line[6].split("=")[1].charAt(0);
                     master.updateEntity(last_id_unit, hp, x, y,symbole);
+
                 } else if (tab_line[3].equals("ennemy")) {
                     // sur une condition, quand les joueurs on finit de jouer il faudrait récupérer le dernier
                     // move du joueur qui est envoyé après
                     // on met à jour seulement les IA qui peuvent le voir bouger
                     if(Controller.getInstance().isIA()) {
-                        for (int i = 1; i <= master.getNbIA(); i++) {
+
+                        for(java.util.Map.Entry<Integer, Enemy> entry : master.getListUnits().entrySet()) {
+                            Integer key = entry.getKey();
+                            Enemy value = entry.getValue();
+
+                            if (master.IACanSeeEnemy(key, new Tuple<>(x, y))) {
+                                System.out.println("[DEBUG] On met à jour la position de l'unité " + key + " (" + x + ", " + y + ")");
+                                master.setPosEnemyByUnit(key, new Tuple<>(x, y));
+                            }
+                        }
+
+                        /*for (int i = 1; i <= master.getNbIA(); i++) {
+                            System.out.println(master.getNbIA());
                             if (master.IACanSeeEnemy(i, new Tuple<>(x, y))) {
                                 System.out.println("[DEBUG] On met à jour la position de l'unité " + i + " (" + x + ", " + y + ")");
                                 master.setPosEnemyByUnit(i, new Tuple<>(x, y));
                             }
-                        }
+                        }*/
                     }
                 } else {
                     // sinon c'est un terrain decouvert par l'unit
@@ -132,13 +147,14 @@ public class Adapter extends Thread {
         Tuple<Integer, Integer> move = new Tuple<>(actionIA.getX(), actionIA.getY());
         String action = "";
 
-        master.updateMapOccupied(posIA.x, posIA.y, false);
-        master.updateMapOccupied(move.x, move.y, true);
+
 
         System.out.println("[Pos_IA]" + posIA.toString());
         System.out.println("[Move IA]" + move.toString());
 
         if (actionIA.getAction() == Action.ActionType.Move) {
+            master.updateMapOccupied(posIA.x, posIA.y, false);
+            master.updateMapOccupied(move.x, move.y, true);
             if (move.y - posIA.y == -1) {
                 // north
                 System.out.println("[Move]north");

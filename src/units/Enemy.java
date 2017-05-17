@@ -161,7 +161,6 @@ public class Enemy {
                 path = aetoile.runAstar();
             }
 
-
             Tile dest = path.pop();
             return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
     }
