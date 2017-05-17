@@ -4,6 +4,7 @@ import astar.Astar;
 import astar.Path;
 import map.Tile;
 import map.Tuple;
+import proba.DicoProba;
 import proba.MatrixProbaController;
 import proba.Proba;
 
@@ -42,6 +43,10 @@ public class Enemy {
 
     public int getTimelapse() {
         return mapController.getTimelapse();
+    }
+
+    public DicoProba getDicoProba() {
+        return mapController.getDicoProba();
     }
 
     public int getHp() {

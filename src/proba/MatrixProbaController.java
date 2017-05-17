@@ -40,6 +40,10 @@ public class MatrixProbaController {
         return timelapse;
     }
 
+    public DicoProba getDicoProba() {
+        return matrix.getDicoProba();
+    }
+
     public void updateProba(){
         timelapse++;
     }
