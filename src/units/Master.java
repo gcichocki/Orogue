@@ -12,6 +12,10 @@ public class Master {
         // On compare les distances au carré pour économiser l'opération de racine carrée (rayon fov = 8)
         // Si jamais l'ennemi est dans le cercle mais caché par un obstacle le serveur ne renvoie pas de ligne "ennemy"
         // et donc cette fonction n'est pas exécutée, inutile donc de tester les obstacles ici
+        //System.out.println("[List_units] " + listUnits.toString());
+        //System.out.println("[Player_pos] " + player_pos.toString());
+        //System.out.println("[id_unit] " + id);
+        //System.out.println(listUnits.get(id));
         return Math.pow((listUnits.get(id).getPosX() - player_pos.x), 2.0) + Math.pow((player_pos.y - listUnits.get(id).getPosY()), 2.0) <= 64.0d;
     }
 
@@ -20,6 +24,11 @@ public class Master {
         On
     }
     private HashMap<Integer, Enemy> listUnits;
+
+    public HashMap<Integer, Enemy> getListUnits() {
+        return listUnits;
+    }
+
     private Map map;
     private MasterState state;
     private HashMap<Integer, ArrayList<Tuple<Integer, Integer>>> tmpNewTilesByUnit;
