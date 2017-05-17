@@ -40,6 +40,10 @@ public class MatrixProba {
         updateMapFromDico();
     }
 
+    public DicoProba getDicoProba() {
+        return dicoProba;
+    }
+
     public int getSizeX() { return sizeX; }
 
     public int getSizeY() { return sizeY; }

@@ -36,6 +36,14 @@ public class MatrixProbaController {
         //this.printAll();
     }
 
+    public int getTimelapse() {
+        return timelapse;
+    }
+
+    public DicoProba getDicoProba() {
+        return matrix.getDicoProba();
+    }
+
     public void updateProba(){
         timelapse++;
     }

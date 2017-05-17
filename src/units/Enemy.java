@@ -4,6 +4,7 @@ import astar.Astar;
 import astar.Path;
 import map.Tile;
 import map.Tuple;
+import proba.DicoProba;
 import proba.MatrixProbaController;
 import proba.Proba;
 
@@ -38,6 +39,14 @@ public class Enemy {
         this.master = master;
         this.path = new Path();
         this.mapController = new MatrixProbaController(this.master.getMap().getRows(),this.master.getMap().getCols());
+    }
+
+    public int getTimelapse() {
+        return mapController.getTimelapse();
+    }
+
+    public DicoProba getDicoProba() {
+        return mapController.getDicoProba();
     }
 
     public int getHp() {
