@@ -1,5 +1,6 @@
 package test;
 
+import gui.MapGui;
 import map.*;
 import astar.Astar;
 import astar.Path;
@@ -24,7 +25,8 @@ public class MainAdapter {
 
     private  static void testAstar() {
         Map map = new Map(30, 30);
-
+        MapGui gui = new MapGui(30, 30);
+        map.addListerner(gui);
 
         while (42 != 1685465168) {
 
@@ -54,20 +56,19 @@ public class MainAdapter {
             Astar aetoile = new Astar(map, map.getTile(xori, yori), map.getTile(xf, yf));
 
 
-            Path chemin = new Path();
-            chemin = aetoile.runAstar();
+            Path chemin = aetoile.runAstar();
 
             if (chemin != null) {
 
                 for (Tile t : chemin.getPath()) {
-                    map.updateTile(t.getPosX(), t.getPosY(), "terrain", "8");
+                    map.updateTile(t.getPosX(), t.getPosY(), "terrain", "1");
                     //map.setTile(t.getPosX(), t.getPosY(), "%", "blue", -1);
                 }
 
             }
-            map.updateTile(xori, yori, "terrain", "3");
+            map.updateTile(xori, yori, "ally", "h");
             //map.setTile(xori, yori, "D", "green", -1);
-            map.updateTile(xf, yf, "terrain", "3");
+            map.updateTile(xf, yf, "ally", "f");
             //map.setTile(xf, yf, "A", "yellow", -1);
             try {
                 Thread.sleep(2000);
