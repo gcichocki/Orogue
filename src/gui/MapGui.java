@@ -202,7 +202,7 @@ public class MapGui extends JFrame {
             zone_info.setText(content_info);
 
             //info joueurs
-            hud_panel = new JPanel(new GridLayout(10, 1));
+            hud_panel = new JPanel(new GridLayout(20, 1));
             hud_panel.setPreferredSize(new Dimension(420, 350));
             hud_panel.setOpaque(false);
 

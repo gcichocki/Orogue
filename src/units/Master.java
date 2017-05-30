@@ -75,10 +75,10 @@ public class Master {
 
     public Action playUnit(int id) {
         // show the tiles saw by this unit
-        System.out.println("[List_Case_Updated] " + tmpNewTilesByUnit.get(id).toString());
+        //System.out.println("[List_Case_Updated] " + tmpNewTilesByUnit.get(id).toString());
         // if we didn't saw the enemy
         posEnemyByUnit.putIfAbsent(id, new Tuple<>(-1, -1));
-        System.out.println("[Pos_Enemy_by_unit] " + posEnemyByUnit.get(id).toString());
+        //System.out.println("[Pos_Enemy_by_unit] " + posEnemyByUnit.get(id).toString());
 
         return listUnits.get(id).action(tmpNewTilesByUnit.get(id), posEnemyByUnit.get(id));
     }

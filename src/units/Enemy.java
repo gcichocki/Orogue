@@ -130,7 +130,7 @@ public class Enemy {
                 toDo = search(list);
                 break;
         }
-        System.out.println("[Path]" + path.getPath().toString());
+        //System.out.println("[Path]" + path.getPath().toString());
         return toDo;
     }
 
@@ -143,8 +143,14 @@ public class Enemy {
                 this.master.getMap().getTile(playerPosition.x, playerPosition.y));
         path = aetoile.runAstar();
 
-        Tile dest = path.pop();
-        return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
+
+        if(path == null){
+            return new Action(this.getPosX()+1, this.getPosY(), Action.ActionType.Move);
+        } else {
+            Tile dest = path.pop();
+            return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
+        }
+
     }
 
 
@@ -163,12 +169,12 @@ public class Enemy {
      * the unit go in its direction
      */
     public Action search(ArrayList<Tuple<Integer, Integer>> list){
-            if(path.isEmpty() || path.getPath().get(0).isObstacle()){
+            if(path == null || path.isEmpty() || path.getPath().get(0).isObstacle()){
                 mapController.updateProbasToZero(list);
                 Proba p;
                 do{
                     p = this.mapController.pickDirection();
-                    System.out.println("[Proba] " + p.toString());
+                    //System.out.println("[Proba] " + p.toString());
                 }while(this.master.getMap().getTile(p.getX(), p.getY()).isObstacle() || (p.getX()==this.getPosX() && p.getY()==this.posY));
 
                 Astar aetoile = new Astar(
@@ -178,8 +184,12 @@ public class Enemy {
                 path = aetoile.runAstar();
             }
 
+        if(path == null){
+            return new Action(this.getPosX()+1, this.getPosY(), Action.ActionType.Move);
+        } else {
             Tile dest = path.pop();
             return new Action(dest.getPosX(), dest.getPosY(), Action.ActionType.Move);
+        }
     }
 
 

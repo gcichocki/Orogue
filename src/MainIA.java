@@ -6,7 +6,7 @@ import utils.Log;
  */
 public class MainIA {
     public static void main(String[] args) {
-        Log.setLevel(Log.LOG_LEVEL.ALL);
+        Log.setLevel(Log.LOG_LEVEL.NONE);
         Controller controller = Controller.getInstance();
         controller.setIA(true);
     }
