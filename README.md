@@ -7,7 +7,7 @@
  Aujourd'hui notre système est composé d'ennemis possédant une **machine à états**, capable de **communiquer deux à deux**.
  Nos agents peuvent partir à la **recherche** du joueur. La recherche peut-être orientée ou non (concept d'**estimation de la position du joueur** après l'avoir croisé).
  Les agents peuvent **poursuivre** le joueur lorsque qu'il est dans leur champ de vision et l'**attaquer** lorsqu'ils sont à son corps à corps.
- Cependant nos agents pourraient être améliorer et possèdent quelques faiblesses. Voici donc une liste de problèmes/points à améliorer par rapport à notre système multi-agents.
+ Cependant nos agents pourraient être améliorés et possèdent quelques faiblesses. Voici donc une liste de problèmes/points à améliorer par rapport à notre système multi-agents.
 
 ### Le social
 
