@@ -27,7 +27,7 @@ La dimension sociale pourrait être exploitée de façon très diverse et pourra
  
  ### Stratégies
  
- Le système implémenté aujourd'hui est particulièrement aggressif. Un agent qui repère le joueur n'aura qu'une envie : l'éliminer. Les agents peuevnt former des groupes grâce à la communication mais la dimension sociale n'est pas plus exploitée. 
+ Le système implémenté aujourd'hui est particulièrement aggressif. Un agent qui repère le joueur n'aura qu'une envie : l'éliminer. Les agents peuvent former des groupes grâce à la communication mais la dimension sociale n'est pas plus exploitée. 
  
  Cependant beaucoup d'autres stratégies pourraient être implémentée pour améliorer et diversifier le comportement de nos agents. 
  
